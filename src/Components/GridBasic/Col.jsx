@@ -44,7 +44,7 @@ const Col = ({
         offsetXxl && Style[`offset-xxl-${offsetXxl}`],
         orderSm && Style[`order-sm-${orderSm}`],
         orderMd && Style[`order-md-${orderMd}`],
-        orderLg && Style[`order-lg-${orderlg}`],
+        orderLg && Style[`order-lg-${orderLg}`],
         orderXl && Style[`order-xl-${orderXl}`],
         orderXxl && Style[`order-xxl-${orderXxl}`],
         className
@@ -71,7 +71,7 @@ export default Col;
 // # offsetXxl: Set the offset of the column for extra extra large screens (1 to 12)
 // # orderSm: Set the order of the column for small screens (first - 1 to 5 - last)
 // # orderMd: Set the order of the column for medium screens (first - 1 to 5 - last)
-// # orderlg: Set the order of the column for large screens (first - 1 to 5 - last)
+// # orderLg: Set the order of the column for large screens (first - 1 to 5 - last)
 // # orderXl: Set the order of the column for extra large screens (first - 1 to 5 - last)
 // # orderXxl: Set the order of the column for extra extra large screens (first - 1 to 5 - last)
 // # className, add one or more class names to the element
