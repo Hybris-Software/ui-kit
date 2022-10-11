@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from '../../Utils/classNames'
 
 // Styles
-import Style from './Row.module.css'
+import Style from '../GridBasic.module.css'
 
 const Row = ({ className, style, children }) => {
     return (

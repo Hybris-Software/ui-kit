@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from '../../Utils/classNames'
 
 // Styles
-import Style from './Col.module.css'
+import Style from '../GridBasic.module.css'
 
 const Col = ({ sm, md, lg, xl, xxl, offsetSm, offsetMd, offsetLg, offsetXl, offsetXxl, orderSm, orderMd, orderlg, orderXl, orderXxl, className, style, children }) => {
     return (
