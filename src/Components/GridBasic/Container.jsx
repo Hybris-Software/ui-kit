@@ -4,7 +4,7 @@ import React from 'react'
 import classNames from '../../Utils/classNames'
 
 // Styles
-import Style from '../GridBasic.module.css'
+import Style from './GridBasic.module.css'
 
 const Container = ({ className, style, children }) => {
     console.log(className)
