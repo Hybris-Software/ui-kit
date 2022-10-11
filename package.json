@@ -1,6 +1,6 @@
 {
   "name": "@hybris-software/ui-kit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
