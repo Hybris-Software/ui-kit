@@ -1,0 +1,26 @@
+.buttonClass {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  font-weight: 700;
+  font-size: 16px;
+  justify-content: center;
+  letter-spacing: 0.2px;
+  padding: 12px 20px;
+}
+
+.buttonClass:hover {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+.buttonDisabled {
+  background-color: rgba(0, 0, 0, 0.6);
+  cursor: not-allowed;
+}
+
+.buttonDisabled:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
