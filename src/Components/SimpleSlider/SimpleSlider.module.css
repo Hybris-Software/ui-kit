@@ -1,0 +1,26 @@
+.slideshow {
+  margin: 0 auto;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.slideshowSlider {
+  white-space: nowrap;
+}
+
+.slide {
+  display: inline-block;
+}
+
+.paginationButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+}
+
+.buttons {
+  padding: 20px;
+  margin-inline: 10px;
+  background-color: #efefef;
+  cursor: pointer;
+}
