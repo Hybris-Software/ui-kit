@@ -1,24 +1,20 @@
-import React from 'react'
+import React from "react";
 
-// Utils 
-import classNames from '../../Utils/classNames'
+// Utils
+import classNames from "../../Utils/classNames";
 
 // Styles
-import Style from './GridBasic.module.css'
+import Style from "./GridBasic.module.css";
 
 const Container = ({ className, style, children }) => {
-    console.log(className)
-    return (
-        <div
-            style={style}
-            className={classNames(Style.container, className)}
-        >
-            {children}
-        </div>
-    )
-}
+  return (
+    <div style={style} className={classNames(Style.container, className)}>
+      {children}
+    </div>
+  );
+};
 
-export default Container
+export default Container;
 
 // Language: javascript
 // # className, add one or more class names to the element
