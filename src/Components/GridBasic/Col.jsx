@@ -15,8 +15,8 @@ const Col = ({
   className,
   style,
   children,
-  colSize,
-  marginBottom,
+  colsize,
+  marginbottom,
 }) => {
   return (
     <div
@@ -30,8 +30,8 @@ const Col = ({
       )}
       style={{
         flex: "0 0 auto",
-        width: colSize,
-        marginBottom: marginBottom,
+        width: colsize,
+        marginBottom: marginbottom,
         ...style,
       }}
     >

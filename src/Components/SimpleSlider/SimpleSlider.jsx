@@ -149,10 +149,6 @@ const SimpleSlider = ({
         parseInt(elementStyle.width.toString().replace("px", "")) +
         containerMargin;
 
-      console.log("margin", containerMargin);
-      console.log("width", containerW);
-      console.log("width - margin", containerW + containerMargin);
-
       const elementW =
         (containerW - gap * (elementPerView - 1)) / elementPerView;
       setContainerWidth(containerW);

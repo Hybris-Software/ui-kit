@@ -154,8 +154,8 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
         if (isValidElement(child)) {
           const colWidth = getColWidth(child.props, windowSize);
           return cloneElement(child, {
-            colSize: `calc((100% - ${horizontalGaps[index]}px) * ${colWidth} / 12)`,
-            marginBottom: verticalGaps[index],
+            colsize: `calc((100% - ${horizontalGaps[index]}px) * ${colWidth} / 12)`,
+            marginbottom: verticalGaps[index],
             key: index,
           });
         }
