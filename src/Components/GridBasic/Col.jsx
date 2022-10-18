@@ -7,16 +7,6 @@ import classNames from "../../Utils/classNames";
 import Style from "./GridBasic.module.css";
 
 const Col = ({
-  sm,
-  md,
-  lg,
-  xl,
-  xxl,
-  offsetSm,
-  offsetMd,
-  offsetLg,
-  offsetXl,
-  offsetXxl,
   orderSm,
   orderMd,
   orderLg,
@@ -25,23 +15,12 @@ const Col = ({
   className,
   style,
   children,
+  colSize,
+  marginBottom,
 }) => {
   return (
     <div
       className={classNames(
-        [!sm, !md, !lg, !xl, !xxl].includes(false) && !className
-          ? "".trim
-          : Style.col,
-        sm && Style[`col-sm-${sm}`],
-        md && Style[`col-md-${md}`],
-        lg && Style[`col-lg-${lg}`],
-        xl && Style[`col-xl-${xl}`],
-        xxl && Style[`col-xxl-${xxl}`],
-        offsetSm && Style[`offset-sm-${offsetSm}`],
-        offsetMd && Style[`offset-md-${offsetMd}`],
-        offsetLg && Style[`offset-lg-${offsetLg}`],
-        offsetXl && Style[`offset-xl-${offsetXl}`],
-        offsetXxl && Style[`offset-xxl-${offsetXxl}`],
         orderSm && Style[`order-sm-${orderSm}`],
         orderMd && Style[`order-md-${orderMd}`],
         orderLg && Style[`order-lg-${orderLg}`],
@@ -49,7 +28,12 @@ const Col = ({
         orderXxl && Style[`order-xxl-${orderXxl}`],
         className
       )}
-      style={style}
+      style={{
+        flex: "0 0 auto",
+        width: colSize,
+        marginBottom: marginBottom,
+        ...style,
+      }}
     >
       {children}
     </div>
@@ -77,3 +61,5 @@ export default Col;
 // # className, add one or more class names to the element
 // # children: Rendered children
 // # style: Add inline styles to the element
+// # colSize: Change the width of the column
+// # marginBottom: Change the margin bottom of the column

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // Utils
 import classNames from "../../Utils/classNames";
@@ -6,9 +6,18 @@ import classNames from "../../Utils/classNames";
 // Styles
 import Style from "./GridBasic.module.css";
 
+// Contexts
+import ThemeContext from "../../Contexts/ThemeContext";
+
 const Container = ({ className, style, children }) => {
+  const themeContext = useContext(ThemeContext);
+  const containerStyle = themeContext.theme.containerStyle;
+
   return (
-    <div style={style} className={classNames(Style.container, className)}>
+    <div
+      style={style}
+      className={classNames(Style.container, containerStyle, className)}
+    >
       {children}
     </div>
   );
