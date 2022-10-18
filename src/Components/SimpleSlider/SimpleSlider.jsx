@@ -40,13 +40,16 @@ function decreaseIndex(index, setIndex, children, elementPerView) {
 }
 
 const SimpleSlider = ({
-  animation = "all 0.6s ease",
+  animation = "ease",
+  animationDuration = 200,
+  disableDrag = false,
   autoPlay = false,
+  autoPlayTransitionSpeed = 1000,
   autoPlaySpeed = 2000,
   breakPoints = null,
   buttonClass = Style.buttons,
   children = [],
-  dragSlideRatio = 0.22,
+  dragSlideRatio = 0.01,
   gap = 40,
   nextChild = "Next",
   paginationButtons = true,
@@ -61,6 +64,8 @@ const SimpleSlider = ({
   const [isDown, setIsDown] = useState(false);
   const [offSet, setOffSet] = useState(0);
   const [dragMovement, setDragMovement] = useState(0);
+  const [disableAnimation, setDisableAnimation] = useState(false);
+  const [transitionSpeed, setTransitionSpeed] = useState(0);
 
   // Context Variables
   const themeContext = useContext(ThemeContext);
@@ -81,7 +86,7 @@ const SimpleSlider = ({
   function onDragDesktop(e) {
     const sliderContainer = document.getElementById("slider");
 
-    if (isDown) {
+    if (isDown && !disableAnimation) {
       sliderContainer.style.marginLeft = `${
         e.clientX - offSet - index * elTranslate
       }px`;
@@ -104,7 +109,9 @@ const SimpleSlider = ({
 
   function onDragMobile(e) {
     const sliderContainer = document.getElementById("slider");
-    if (isDown) {
+    if (isDown && !disableAnimation) {
+      setDisableAnimation(true);
+
       sliderContainer.style.marginLeft = `${
         e.touches[0].clientX - offSet - index * elTranslate
       }px`;
@@ -114,6 +121,9 @@ const SimpleSlider = ({
           increaseIndex(index, setIndex, children, elementPerView);
           setIsDown(false);
         }
+        setTimeout(() => {
+          setDisableAnimation(false);
+        }, transitionSpeed);
       }
 
       if (index > 0) {
@@ -121,23 +131,34 @@ const SimpleSlider = ({
           decreaseIndex(index, setIndex, children, elementPerView);
           setIsDown(false);
         }
+        setTimeout(() => {
+          setDisableAnimation(false);
+        }, transitionSpeed);
       }
     }
   }
 
   useEffect(() => {
+    setTransitionSpeed(autoPlay ? autoPlayTransitionSpeed : animationDuration);
+
     if (windowSize.width) {
       const element = document.getElementById("slider");
       const elementStyle = getComputedStyle(element);
-      const containerW = parseInt(
-        elementStyle.width.toString().replace("px", "")
-      );
+      const containerMargin = parseInt(elementStyle.marginLeft);
+      const containerW =
+        parseInt(elementStyle.width.toString().replace("px", "")) +
+        containerMargin;
+
+      console.log("margin", containerMargin);
+      console.log("width", containerW);
+      console.log("width - margin", containerW + containerMargin);
+
       const elementW =
         (containerW - gap * (elementPerView - 1)) / elementPerView;
       setContainerWidth(containerW);
       setElWidth(elementW);
       setElTranslate(elementW + gap);
-      setDragMovement(elTranslate * dragSlideRatio);
+      setDragMovement(elementW * dragSlideRatio);
     }
   }, [windowSize]);
 
@@ -156,28 +177,44 @@ const SimpleSlider = ({
         id="slider"
         // Desktop
         onMouseDown={(e) => {
-          setIsDown(true);
-          setOffSet(e.clientX);
+          if (!disableDrag) {
+            setIsDown(true);
+            setOffSet(e.clientX);
+          }
         }}
         onMouseMove={(e) => {
-          onDragDesktop(e);
+          if (!disableDrag) {
+            onDragDesktop(e);
+          }
         }}
         onMouseUp={dragRepositioning}
         // Mobile
         onTouchStart={(e) => {
-          setIsDown(true);
-          setOffSet(e.touches[0].clientX);
+          if (!disableDrag) {
+            setIsDown(true);
+            setOffSet(e.touches[0].clientX);
+          }
         }}
         onTouchMove={(e) => {
-          onDragMobile(e);
+          if (!disableDrag) {
+            onDragMobile(e);
+          }
         }}
-        onTouchEnd={dragRepositioning}
+        onTouchEnd={() => {
+          if (!disableDrag) {
+            dragRepositioning();
+          }
+        }}
         // Check
-        onMouseLeave={dragRepositioning}
+        onMouseLeave={() => {
+          if (!disableDrag) {
+            dragRepositioning();
+          }
+        }}
         className={Style.slideshowSlider}
         style={{
-          cursor: isDown ? "grabbing" : "grab",
-          transition: animation,
+          cursor: disableDrag ? "unset" : isDown ? "grabbing" : "grab",
+          transition: `all ${transitionSpeed}ms ${animation}`,
           marginLeft: `${-index * ((elTranslate / containerWidth) * 100)}%`,
         }}
       >
