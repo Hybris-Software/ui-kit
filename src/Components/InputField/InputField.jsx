@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 // Icons
 import { FiAlertTriangle } from "react-icons/fi";
@@ -11,11 +11,15 @@ import classNames from "../../Utils/classNames";
 // Styles
 import Style from "./InputField.module.css";
 
+// Contexts
+import ThemeContext from "../../Contexts/ThemeContext";
+
 const InputField = ({
   className,
-  inputFieldContainer = Style.inputFieldContainer,
-  inputFieldContainerError = Style.inputFieldContainerError,
-  inputFieldContainerEmpty = Style.inputFieldContainerEmpty,
+  baseClassName,
+  successClassName,
+  errorClassName,
+  labelClassName,
   isValid,
   errorDetails,
   type,
@@ -27,10 +31,10 @@ const InputField = ({
   setValue = () => {},
   setShowErrors = () => {},
   style,
-  errorIconVisibility = false,
-  errorIcon = <FiAlertTriangle className={classNames(Style.icon, Style.alertIcon)} />,
-  successIconVisibility = false,
-  succesIcon = <AiOutlineCheck className={classNames(Style.icon, Style.successIcon)} />,
+  errorIconVisibility,
+  errorIcon,
+  successIconVisibility,
+  successIcon,
   showPasswordIconVisibility = type === "password" ? true : false,
   showPasswordIcon = <HiOutlineEye />,
   showPasswordIconOff = <HiOutlineEyeOff />,
@@ -48,7 +52,70 @@ const InputField = ({
   const [eyeIconVisibility, setEyeIconVisibility] = useState(false);
   const [eyeIcon, setEyeIcon] = useState(showPasswordIcon);
 
-  const errorMessageString = errorDetails == null ? null : typeof errorDetails === "object" ? errorDetails.message : errorDetails;
+  const themeContext = useContext(ThemeContext);
+
+  const errorMessageString =
+    errorDetails == null
+      ? null
+      : typeof errorDetails === "object"
+      ? errorDetails.message
+      : errorDetails;
+
+  const computedBaseClassName =
+    baseClassName ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.baseClassName) ||
+    Style.inputFieldBase;
+
+  const computedErrorClassName =
+    errorClassName ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.errorClassName) ||
+    Style.inputFieldError;
+
+  const computedSuccessClassName =
+    successClassName ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.successClassName) ||
+    Style.inputFieldSuccess;
+
+  const computedLabelClassName =
+    labelClassName ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.labelClassName) ||
+    Style.label;
+
+  const computedSuccessIcon = successIcon ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.succesIcon) || (
+      <AiOutlineCheck className={classNames(Style.icon, Style.successIcon)} />
+    );
+
+  const computedErrorIcon = errorIcon ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.errorIcon) || (
+      <FiAlertTriangle className={classNames(Style.icon, Style.alertIcon)} />
+    );
+
+  const computedErrorIconVisibility =
+    errorIconVisibility ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.errorIconVisibility) ||
+    true;
+
+  const computedSuccessIconVisibility =
+    successIconVisibility ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.successIconVisibility) ||
+    true;
 
   return (
     <div
@@ -64,21 +131,25 @@ const InputField = ({
         }
       }}
     >
-      {label && <div className={Style.label}>{label}</div>}
+      {label && <div className={computedLabelClassName}>{label}</div>}
       <div
-        className={classNames(Style.inputField,
-          isValid === null
-            ? inputFieldContainerEmpty
+        className={classNames(
+          Style.inputField,
+          isValid === true
+            ? computedSuccessClassName
             : isValid === false
-              ? inputFieldContainerError
-              : inputFieldContainer,
+            ? computedErrorClassName
+            : computedBaseClassName,
           className
         )}
         style={style}
       >
         {/* Input */}
         <input
-          className={classNames(Style.input, showArrows === false && Style.inputArrows)}
+          className={classNames(
+            Style.input,
+            showArrows === false && Style.inputArrows
+          )}
           type={inputType}
           placeholder={placeholder}
           value={value}
@@ -117,8 +188,7 @@ const InputField = ({
               if (inputType === "password") {
                 setInputType("text");
                 setEyeIcon(showPasswordIconOff);
-              }
-              else {
+              } else {
                 setInputType("password");
                 setEyeIcon(showPasswordIcon);
               }
@@ -129,9 +199,12 @@ const InputField = ({
         ) : (
           <span>
             {isValid === true
-              ? successIconVisibility === true && required && (succesIcon)
-              : isValid === false && errorIconVisibility === true && (errorIcon)
-            }
+              ? computedSuccessIconVisibility === true &&
+                required &&
+                computedSuccessIcon
+              : isValid === false &&
+                computedErrorIconVisibility === true &&
+                computedErrorIcon}
           </span>
         )}
       </div>

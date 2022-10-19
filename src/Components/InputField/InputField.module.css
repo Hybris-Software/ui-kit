@@ -19,21 +19,22 @@ input.inputArrows {
     position: relative;
 }
 
-.inputFieldContainer {
-    border: 1px solid black;
-    background-color: #00000008;
-}
-
-.inputFieldContainerEmpty {
+.inputFieldBase {
     border: 1px solid #e5e5e5;
     background-color: white;
 }
 
-.inputFieldContainerError {
+.inputFieldError {
     border: 1px solid red;
     background-color: rgba(255, 0, 0, 0.295);
 }
-.inputFieldContainerError input::placeholder {
+
+.inputFieldSuccess {
+    border: 1px solid black;
+    background-color: #00000008;
+}
+
+.inputFieldError input::placeholder {
     color: black !important;
 }
 

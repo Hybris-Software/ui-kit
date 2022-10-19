@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 
 // Utils
 import classNames from "../../Utils/classNames";
 
 // Styles
 import Style from "./GridBasic.module.css";
+
+// Contexts
+import ThemeContext from "../../Contexts/ThemeContext";
 
 const Col = ({
   orderSm,
@@ -18,6 +21,14 @@ const Col = ({
   colsize,
   marginbottom,
 }) => {
+  const themeContext = useContext(ThemeContext);
+
+  const columnStyle =
+    (themeContext.theme &&
+      themeContext.theme.col &&
+      themeContext.theme.col.columnStyle) ||
+    "";
+
   return (
     <div
       className={classNames(
@@ -26,6 +37,7 @@ const Col = ({
         orderLg && Style[`order-lg-${orderLg}`],
         orderXl && Style[`order-xl-${orderXl}`],
         orderXxl && Style[`order-xxl-${orderXxl}`],
+        columnStyle,
         className
       )}
       style={{

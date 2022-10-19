@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 // Libraries
 import TailSpin from "react-loading-icons/dist/esm/components/tail-spin";
@@ -9,16 +9,41 @@ import classNames from "../../Utils/classNames";
 // Styles
 import Style from "./Button.module.css";
 
+// Contexts
+import ThemeContext from "../../Contexts/ThemeContext";
+
 const Button = ({
-  basicClass = true,
+  buttonClassName,
+  disabledClassName,
   children,
   className,
   disabled = false,
   isLoading = false,
-  loader = <TailSpin height={25} />,
+  loader,
   onClick,
   style,
 }) => {
+  const themeContext = useContext(ThemeContext);
+
+  const computedClassName =
+    buttonClassName ||
+    (themeContext.theme &&
+      themeContext.theme.button &&
+      themeContext.theme.button.buttonClassName) ||
+    Style.buttonClass;
+
+  const computedDisabledClassName =
+    disabledClassName ||
+    (themeContext.theme &&
+      themeContext.theme.button &&
+      themeContext.theme.button.buttonDisabledClassName) ||
+    Style.buttonDisabled;
+
+  const buttonLoader = loader ||
+    (themeContext.theme &&
+      themeContext.theme.button &&
+      themeContext.theme.button.loader) || <TailSpin height={25} />;
+
   return (
     <div
       style={{
@@ -26,8 +51,8 @@ const Button = ({
         ...style,
       }}
       className={classNames(
-        basicClass && Style.buttonClass,
-        basicClass && (disabled || isLoading) && Style.buttonDisabled,
+        computedClassName,
+        (disabled || isLoading) && computedDisabledClassName,
         className
       )}
       onClick={() => {
@@ -38,7 +63,7 @@ const Button = ({
         }
       }}
     >
-      {isLoading ? loader : children}
+      {isLoading ? buttonLoader : children}
     </div>
   );
 };

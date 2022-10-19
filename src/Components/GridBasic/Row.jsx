@@ -92,6 +92,13 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
   const themeContext = useContext(ThemeContext);
   const windowSize = themeContext.windowSize;
 
+  const computedClassName =
+    themeContext.theme &&
+    themeContext.theme.row &&
+    themeContext.theme.row.rowClassName
+      ? themeContext.theme.row.rowClassName
+      : "";
+
   useEffect(() => {
     if (windowSize) {
       const columnHorizontalGap = !useGap
@@ -99,9 +106,10 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
         : columnGap && columnGap.horizontal
         ? getColGap(columnGap.horizontal, windowSize)
         : themeContext.theme &&
-          themeContext.theme.columnGap &&
-          themeContext.theme.columnGap.horizontal
-        ? getColGap(themeContext.theme.columnGap.horizontal, windowSize)
+          themeContext.theme.row &&
+          themeContext.theme.row.columnGap &&
+          themeContext.theme.row.columnGap.horizontal
+        ? getColGap(themeContext.theme.row.columnGap.horizontal, windowSize)
         : 0;
 
       const columnVerticalGap = !useGap
@@ -109,9 +117,10 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
         : columnGap && columnGap.vertical
         ? getColGap(columnGap.vertical, windowSize)
         : themeContext.theme &&
-          themeContext.theme.columnGap &&
-          themeContext.theme.columnGap.vertical
-        ? getColGap(themeContext.theme.columnGap.vertical, windowSize)
+          themeContext.theme.row &&
+          themeContext.theme.row.columnGap &&
+          themeContext.theme.row.columnGap.vertical
+        ? getColGap(themeContext.theme.row.columnGap.vertical, windowSize)
         : 0;
 
       const newHorizontalGaps = [];
@@ -149,7 +158,7 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
   }, [windowSize, columnGap, children, useGap]);
 
   return (
-    <div className={classNames(Style.row, className)} style={style}>
+    <div className={classNames(Style.row, computedClassName, className)} style={style}>
       {childrenList.map((child, index) => {
         if (isValidElement(child)) {
           const colWidth = getColWidth(child.props, windowSize);

@@ -11,12 +11,17 @@ import ThemeContext from "../../Contexts/ThemeContext";
 
 const Container = ({ className, style, children }) => {
   const themeContext = useContext(ThemeContext);
-  const containerStyle = themeContext.theme.containerStyle;
+
+  const computedClassName =
+    (themeContext.theme &&
+      themeContext.theme.container &&
+      themeContext.theme.container.containerClassName) ||
+    "";
 
   return (
     <div
       style={style}
-      className={classNames(Style.container, containerStyle, className)}
+      className={classNames(Style.container, computedClassName, className)}
     >
       {children}
     </div>
