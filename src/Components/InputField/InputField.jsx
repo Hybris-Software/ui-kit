@@ -16,14 +16,16 @@ const InputField = ({
   inputFieldContainer = Style.inputFieldContainer,
   inputFieldContainerError = Style.inputFieldContainerError,
   inputFieldContainerEmpty = Style.inputFieldContainerEmpty,
-  error = { value: null },
+  isValid,
+  errorDetails,
   type,
   label,
   onPaste = true,
   onCopy = true,
   placeholder,
   required,
-  setValue,
+  setValue = () => {},
+  setShowErrors = () => {},
   style,
   errorIconVisibility = false,
   errorIcon = <FiAlertTriangle className={classNames(Style.icon, Style.alertIcon)} />,
@@ -32,15 +34,21 @@ const InputField = ({
   showPasswordIconVisibility = type === "password" ? true : false,
   showPasswordIcon = <HiOutlineEye />,
   showPasswordIconOff = <HiOutlineEyeOff />,
-  validationOnBlur = true,
-  validationOnInput = true,
   showArrows = false,
   value,
+  showError = true,
+  maxLength,
+  onBlur = () => {},
+  onInput = () => {},
+  onChange = () => {},
+  readOnly = false,
 }) => {
   // Variables
   const [inputType, setInputType] = useState(type);
   const [eyeIconVisibility, setEyeIconVisibility] = useState(false);
   const [eyeIcon, setEyeIcon] = useState(showPasswordIcon);
+
+  const errorMessageString = errorDetails == null ? null : typeof errorDetails === "object" ? errorDetails.message : errorDetails;
 
   return (
     <div
@@ -59,9 +67,9 @@ const InputField = ({
       {label && <div className={Style.label}>{label}</div>}
       <div
         className={classNames(Style.inputField,
-          error.value === null
+          isValid === null
             ? inputFieldContainerEmpty
-            : error.value === false
+            : isValid === false
               ? inputFieldContainerError
               : inputFieldContainer,
           className
@@ -74,19 +82,18 @@ const InputField = ({
           type={inputType}
           placeholder={placeholder}
           value={value}
+          maxLength={maxLength}
+          readOnly={readOnly}
           // onInput Function
           onInput={(e) => {
-            if (validationOnInput) {
-              setValue(e.target.value);
-            } else {
-              setValue(e.target.value, false);
-            }
+            setValue(e.target.value);
+            onInput(e);
           }}
+          onChange={onChange}
           // onBlur Function
           onBlur={(e) => {
-            if (validationOnBlur) {
-              setValue(e.target.value);
-            }
+            setShowErrors();
+            onBlur(e);
           }}
           // onPaste Function
           onPaste={(e) => {
@@ -121,16 +128,19 @@ const InputField = ({
           </span>
         ) : (
           <span>
-            {error.value === true
+            {isValid === true
               ? successIconVisibility === true && required && (succesIcon)
-              : error.value === false && errorIconVisibility === true && (errorIcon)
+              : isValid === false && errorIconVisibility === true && (errorIcon)
             }
           </span>
         )}
       </div>
 
-      <div title={error.message} className={Style.errorMessage}>{error.message && error.message}</div>
-
+      {showError && (
+        <div title={errorMessageString} className={Style.errorMessage}>
+          {errorMessageString && errorMessageString}
+        </div>
+      )}
     </div>
   );
 };
