@@ -7,6 +7,7 @@ import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 // Utils
 import classNames from "../../Utils/classNames";
+import generateRandomCharacters from "../../Utils/generateRandomCharacters";
 
 // Styles
 import Style from "./InputField.module.css";
@@ -46,11 +47,14 @@ const InputField = ({
   onInput = () => {},
   onChange = () => {},
   readOnly = false,
+  inputId,
 }) => {
   // Variables
   const [inputType, setInputType] = useState(type);
   const [eyeIconVisibility, setEyeIconVisibility] = useState(false);
   const [eyeIcon, setEyeIcon] = useState(showPasswordIcon);
+
+  const computedInputId = inputId || generateRandomCharacters();
 
   const themeContext = useContext(ThemeContext);
 
@@ -131,7 +135,7 @@ const InputField = ({
         }
       }}
     >
-      {label && <div className={computedLabelClassName}>{label}</div>}
+      {label && <label for={computedInputId} className={computedLabelClassName}>{label}</label>}
       <div
         className={classNames(
           Style.inputField,
@@ -150,6 +154,7 @@ const InputField = ({
             Style.input,
             showArrows === false && Style.inputArrows
           )}
+          id={computedInputId}
           type={inputType}
           placeholder={placeholder}
           value={value}
