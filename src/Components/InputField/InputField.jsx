@@ -135,7 +135,7 @@ const InputField = ({
         }
       }}
     >
-      {label && <label for={computedInputId} className={computedLabelClassName}>{label}</label>}
+      {label && <label htmlFor={computedInputId} className={computedLabelClassName}>{label}</label>}
       <div
         className={classNames(
           Style.inputField,
