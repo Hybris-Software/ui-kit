@@ -39,6 +39,27 @@ function decreaseIndex(index, setIndex, children, elementPerView) {
   }
 }
 
+function isMobile() {
+  return (
+    typeof window.orientation !== "undefined" ||
+    navigator.userAgent.indexOf("IEMobile") !== -1
+  );
+}
+
+function isSafariDesktop() {
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (ua.indexOf("safari") != -1) {
+    if (isMobile()) {
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+}
+
 const SimpleSlider = ({
   animation = "ease",
   animationDuration = 200,
@@ -49,7 +70,7 @@ const SimpleSlider = ({
   breakPoints = null,
   buttonClass = Style.buttons,
   children = [],
-  dragSlideRatio = 0.01,
+  dragSlideRatio = 0.02,
   gap = 40,
   nextChild = "Next",
   paginationButtons = true,
@@ -67,11 +88,15 @@ const SimpleSlider = ({
   const [disableAnimation, setDisableAnimation] = useState(false);
   const [transitionSpeed, setTransitionSpeed] = useState(0);
 
+  const childrenList = Children.toArray(children);
+
   // Context Variables
   const themeContext = useContext(ThemeContext);
   const windowSize = themeContext.windowSize;
 
   const elementPerView = getSlidePerView(breakPoints, slidePerView);
+
+  const computedDisabledDrag = disableDrag || isSafariDesktop();
 
   const sliderContainerRef = useRef(null);
 
@@ -93,16 +118,16 @@ const SimpleSlider = ({
         e.clientX - offSet - index * elTranslate
       }px`;
 
-      if (index < children.length - elementPerView) {
+      if (index < childrenList.length - elementPerView) {
         if (offSet - e.clientX > dragMovement) {
-          increaseIndex(index, setIndex, children, elementPerView);
+          increaseIndex(index, setIndex, childrenList, elementPerView);
           setIsDown(false);
         }
       }
 
       if (index > 0) {
         if (offSet - e.clientX < -dragMovement) {
-          decreaseIndex(index, setIndex, children, elementPerView);
+          decreaseIndex(index, setIndex, childrenList, elementPerView);
           setIsDown(false);
         }
       }
@@ -118,9 +143,9 @@ const SimpleSlider = ({
         e.touches[0].clientX - offSet - index * elTranslate
       }px`;
 
-      if (index < children.length - elementPerView) {
+      if (index < childrenList.length - elementPerView) {
         if (offSet - e.touches[0].clientX > dragMovement) {
-          increaseIndex(index, setIndex, children, elementPerView);
+          increaseIndex(index, setIndex, childrenList, elementPerView);
           setIsDown(false);
         }
         setTimeout(() => {
@@ -130,7 +155,7 @@ const SimpleSlider = ({
 
       if (index > 0) {
         if (offSet - e.touches[0].clientX < -dragMovement) {
-          decreaseIndex(index, setIndex, children, elementPerView);
+          decreaseIndex(index, setIndex, childrenList, elementPerView);
           setIsDown(false);
         }
         setTimeout(() => {
@@ -141,7 +166,11 @@ const SimpleSlider = ({
   }
 
   useEffect(() => {
-    setTransitionSpeed(autoPlay ? autoPlayTransitionSpeed : animationDuration);
+    setTransitionSpeed(
+      autoPlay || computedDisabledDrag
+        ? autoPlayTransitionSpeed
+        : animationDuration
+    );
 
     if (windowSize.width) {
       const element = sliderContainerRef.current;
@@ -161,9 +190,9 @@ const SimpleSlider = ({
   }, [windowSize]);
 
   useEffect(() => {
-    if (autoPlay && !isDown) {
+    if ((autoPlay || computedDisabledDrag) && !isDown) {
       const interval = setInterval(() => {
-        increaseIndex(index, setIndex, children, elementPerView);
+        increaseIndex(index, setIndex, childrenList, elementPerView);
       }, autoPlaySpeed);
       return () => clearInterval(interval);
     }
@@ -175,37 +204,37 @@ const SimpleSlider = ({
         ref={sliderContainerRef}
         // Desktop
         onMouseDown={(e) => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             setIsDown(true);
             setOffSet(e.clientX);
           }
         }}
         onMouseMove={(e) => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             onDragDesktop(e);
           }
         }}
         onMouseUp={dragRepositioning}
         // Mobile
         onTouchStart={(e) => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             setIsDown(true);
             setOffSet(e.touches[0].clientX);
           }
         }}
         onTouchMove={(e) => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             onDragMobile(e);
           }
         }}
         onTouchEnd={() => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             dragRepositioning();
           }
         }}
         // Check
         onMouseLeave={() => {
-          if (!disableDrag) {
+          if (!computedDisabledDrag) {
             dragRepositioning();
           }
         }}
@@ -219,7 +248,7 @@ const SimpleSlider = ({
         {elWidth &&
           containerWidth &&
           elTranslate &&
-          children.map((child, index) => (
+          childrenList.map((child, index) => (
             <Slide key={index} width={elWidth} marginRight={gap}>
               {child}
             </Slide>
@@ -229,7 +258,7 @@ const SimpleSlider = ({
         <PaginationButtons
           index={index}
           setIndex={setIndex}
-          children={children}
+          children={childrenList}
           paginationClass={paginationClass}
           buttonClass={buttonClass}
           prevChild={prevChild}
