@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 
 // Styles
 import Style from "./SimpleSlider.module.css";
@@ -73,10 +73,12 @@ const SimpleSlider = ({
 
   const elementPerView = getSlidePerView(breakPoints, slidePerView);
 
+  const sliderContainerRef = useRef(null);
+
   // Drag Functions
   function dragRepositioning() {
     setIsDown(false);
-    const sliderContainer = document.getElementById("slider");
+    const sliderContainer = sliderContainerRef.current;
 
     sliderContainer.style.marginLeft = `${
       -index * ((elTranslate / containerWidth) * 100)
@@ -84,7 +86,7 @@ const SimpleSlider = ({
   }
 
   function onDragDesktop(e) {
-    const sliderContainer = document.getElementById("slider");
+    const sliderContainer = sliderContainerRef.current;
 
     if (isDown && !disableAnimation) {
       sliderContainer.style.marginLeft = `${
@@ -108,7 +110,7 @@ const SimpleSlider = ({
   }
 
   function onDragMobile(e) {
-    const sliderContainer = document.getElementById("slider");
+    const sliderContainer = sliderContainerRef.current;
     if (isDown && !disableAnimation) {
       setDisableAnimation(true);
 
@@ -142,7 +144,7 @@ const SimpleSlider = ({
     setTransitionSpeed(autoPlay ? autoPlayTransitionSpeed : animationDuration);
 
     if (windowSize.width) {
-      const element = document.getElementById("slider");
+      const element = sliderContainerRef.current;
       const elementStyle = getComputedStyle(element);
       const containerMargin = parseInt(elementStyle.marginLeft);
       const containerW =
@@ -168,9 +170,9 @@ const SimpleSlider = ({
   }, [index, elementPerView]);
 
   return (
-    <div id="slider-container" className={Style.slideshow}>
+    <div className={Style.slideshow}>
       <div
-        id="slider"
+        ref={sliderContainerRef}
         // Desktop
         onMouseDown={(e) => {
           if (!disableDrag) {
