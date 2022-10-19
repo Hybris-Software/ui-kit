@@ -28,7 +28,6 @@ const InputField = ({
   onPaste = true,
   onCopy = true,
   placeholder,
-  required,
   setValue = () => {},
   setShowErrors = () => {},
   style,
@@ -205,7 +204,6 @@ const InputField = ({
           <span>
             {isValid === true
               ? computedSuccessIconVisibility === true &&
-                required &&
                 computedSuccessIcon
               : isValid === false &&
                 computedErrorIconVisibility === true &&
