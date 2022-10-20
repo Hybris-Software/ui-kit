@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, Children } from "react";
 
 // Styles
 import Style from "./SimpleSlider.module.css";
