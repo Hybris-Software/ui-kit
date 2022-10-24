@@ -48,7 +48,6 @@ const Button = ({
     <div
       style={{
         cursor: disabled || isLoading ? "not-allowed" : "pointer",
-        pointerEvents: disabled || isLoading ? "none" : "auto",
         ...style,
       }}
       className={classNames(

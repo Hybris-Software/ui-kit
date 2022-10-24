@@ -37,7 +37,7 @@ const InputField = ({
   errorIcon,
   successIconVisibility,
   successIcon,
-  showPasswordIconVisibility = type === "password" ? true : false,
+  showPasswordIconVisibility = true,
   showPasswordIcon = <HiOutlineEye />,
   showPasswordIconOff = <HiOutlineEyeOff />,
   showArrows = false,
@@ -116,18 +116,22 @@ const InputField = ({
     );
 
   const computedErrorIconVisibility =
-    errorIconVisibility ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.errorIconVisibility) ||
-    true;
+    errorIconVisibility !== undefined
+      ? errorIconVisibility
+      : (themeContext.theme &&
+          themeContext.theme.inputField &&
+          themeContext.theme.inputField.errorIconVisibility) !== undefined
+      ? themeContext.theme.inputField.errorIconVisibility
+      : false;
 
   const computedSuccessIconVisibility =
-    successIconVisibility ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.successIconVisibility) ||
-    true;
+    successIconVisibility !== undefined
+      ? successIconVisibility
+      : (themeContext.theme &&
+          themeContext.theme.inputField &&
+          themeContext.theme.inputField.successIconVisibility) !== undefined
+      ? themeContext.theme.inputField.successIconVisibility
+      : false;
 
   return (
     <div

@@ -19,12 +19,11 @@ input.inputArrows {
   border-radius: 6px;
   position: relative;
   display: flex;
-  background-color: black;
 }
 
 .inputFieldBase {
   border: 1px solid #e5e5e5;
-  /* background-color: white; */
+  background-color: white;
 }
 
 .inputFieldError {
@@ -58,8 +57,12 @@ input.inputArrows {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.icon svg {
   margin-right: 3px;
 }
+
 .componentContainer span {
   color: gray;
 }
@@ -70,6 +73,10 @@ input.inputArrows {
   color: red;
 }
 .eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
 }
 .successIcon {
