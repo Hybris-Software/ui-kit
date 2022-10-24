@@ -76,7 +76,7 @@ input.inputArrows {
   color: green;
 }
 
-.errorMessage {
+.errorMessageClassName {
   min-height: 20px;
   padding: 1px 5px 0;
   width: 100%;

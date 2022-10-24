@@ -20,6 +20,7 @@ const InputField = ({
   className,
   baseClassName,
   successClassName,
+  errorMessageClassName,
   errorClassName,
   labelClassName,
   isValid,
@@ -92,6 +93,13 @@ const InputField = ({
       themeContext.theme.inputField &&
       themeContext.theme.inputField.labelClassName) ||
     Style.label;
+
+  const computedErrorMessageClassName =
+    errorMessageClassName ||
+    (themeContext.theme &&
+      themeContext.theme.inputField &&
+      themeContext.theme.inputField.errorMessageClassName) ||
+    Style.errorMessageClassName;
 
   const computedSuccessIcon = successIcon ||
     (themeContext.theme &&
@@ -218,7 +226,10 @@ const InputField = ({
       </div>
 
       {showError && (
-        <div title={errorMessageString} className={Style.errorMessage}>
+        <div
+          title={errorMessageString}
+          className={computedErrorMessageClassName}
+        >
           {errorMessageString && errorMessageString}
         </div>
       )}
