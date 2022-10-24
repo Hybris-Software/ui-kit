@@ -16,6 +16,7 @@ import Style from "./InputField.module.css";
 import ThemeContext from "../../Contexts/ThemeContext";
 
 const InputField = ({
+  icon = null,
   className,
   baseClassName,
   successClassName,
@@ -134,7 +135,11 @@ const InputField = ({
         }
       }}
     >
-      {label && <label htmlFor={computedInputId} className={computedLabelClassName}>{label}</label>}
+      {label && (
+        <label htmlFor={computedInputId} className={computedLabelClassName}>
+          {label}
+        </label>
+      )}
       <div
         className={classNames(
           Style.inputField,
@@ -147,6 +152,7 @@ const InputField = ({
         )}
         style={style}
       >
+        <span>{icon && icon}</span>
         {/* Input */}
         <input
           className={classNames(
@@ -201,10 +207,9 @@ const InputField = ({
             {eyeIcon}
           </span>
         ) : (
-          <span>
+          <span className={Style.icon}>
             {isValid === true
-              ? computedSuccessIconVisibility === true &&
-                computedSuccessIcon
+              ? computedSuccessIconVisibility === true && computedSuccessIcon
               : isValid === false &&
                 computedErrorIconVisibility === true &&
                 computedErrorIcon}

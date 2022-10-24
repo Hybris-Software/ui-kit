@@ -1,85 +1,88 @@
 input.inputArrows::-webkit-inner-spin-button,
 input.inputArrows::-webkit-outer-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0 !important;
+  -webkit-appearance: none !important;
+  margin: 0 !important;
 }
 input.inputArrows {
-    -moz-appearance: textfield !important;
+  -moz-appearance: textfield !important;
 }
 
 .label {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 8px;
-    letter-spacing: 0.2px;
-    color: black;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+  color: black;
 }
+
 .inputField {
-    border-radius: 6px;
-    position: relative;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  background-color: black;
 }
 
 .inputFieldBase {
-    border: 1px solid #e5e5e5;
-    background-color: white;
+  border: 1px solid #e5e5e5;
+  /* background-color: white; */
 }
 
 .inputFieldError {
-    border: 1px solid red;
-    background-color: rgba(255, 0, 0, 0.295);
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.295);
 }
 
 .inputFieldSuccess {
-    border: 1px solid black;
-    background-color: #00000008;
+  border: 1px solid black;
+  background-color: #00000008;
 }
 
 .inputFieldError input::placeholder {
-    color: black !important;
+  color: black !important;
 }
 
 .input {
-    border: none;
-    outline: none;
-    background-color: transparent;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0.2px;
-    padding: 6px 38px 6px 20px;
-    width: 100%;
-    caret-color: blue;
-    color: gray;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  padding: 6px 10px;
+  width: 100%;
+  caret-color: blue;
+  color: gray;
 }
 
 .icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 3px;
 }
 .componentContainer span {
-    color: gray;
+  color: gray;
 }
 .componentContainer svg {
-    font-size: 20px;
+  font-size: 20px;
 }
 .alertIcon {
-    color: red;
+  color: red;
 }
 .eyeIcon {
-    cursor: pointer;
+  cursor: pointer;
 }
 .successIcon {
-    color: green;
+  color: green;
 }
 
 .errorMessage {
-    min-height: 20px;
-    padding: 1px 5px 0;
-    width: 100%;
-    margin-top: 1px;
-    line-height: 15px;
-    font-size: 13px;
-    text-align: center;
-    color: red;
+  min-height: 20px;
+  padding: 1px 5px 0;
+  width: 100%;
+  margin-top: 1px;
+  line-height: 15px;
+  font-size: 13px;
+  text-align: center;
+  color: red;
 }
