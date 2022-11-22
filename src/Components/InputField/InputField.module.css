@@ -54,13 +54,21 @@ input.inputArrows {
 }
 
 .icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .icon svg {
   margin-right: 3px;
+}
+
+.componentContainer {
+  position: relative;
 }
 
 .componentContainer span {
@@ -73,10 +81,6 @@ input.inputArrows {
   color: red;
 }
 .eyeIcon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
   cursor: pointer;
 }
 .successIcon {

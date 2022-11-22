@@ -16,6 +16,7 @@ import Style from "./InputField.module.css";
 import ThemeContext from "../../Contexts/ThemeContext";
 
 const InputField = ({
+  autoComplete = 'new-password',
   icon = null,
   className,
   baseClassName,
@@ -171,6 +172,7 @@ const InputField = ({
             Style.input,
             showArrows === false && Style.inputArrows
           )}
+          autoComplete={autoComplete}
           id={computedInputId}
           type={inputType}
           placeholder={placeholder}

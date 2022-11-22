@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef, Children } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Children,
+} from "react";
 
 // Styles
 import Style from "./SimpleSlider.module.css";
@@ -50,13 +56,15 @@ function isSafariDesktop() {
   const ua = navigator.userAgent.toLowerCase();
 
   if (ua.indexOf("safari") != -1) {
-    if (isMobile()) {
+    if (ua.indexOf("chrome") > -1) {
       return false;
     } else {
-      return true;
+      if (isMobile()) {
+        return false;
+      } else {
+        return true;
+      }
     }
-  } else {
-    return false;
   }
 }
 
@@ -190,7 +198,7 @@ const SimpleSlider = ({
   }, [windowSize]);
 
   useEffect(() => {
-    if ((autoPlay || computedDisabledDrag) && !isDown) {
+    if (autoPlay || computedDisabledDrag) {
       const interval = setInterval(() => {
         increaseIndex(index, setIndex, childrenList, elementPerView);
       }, autoPlaySpeed);
