@@ -1,0 +1,99 @@
+input.inputArrows::-webkit-inner-spin-button,
+input.inputArrows::-webkit-outer-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+input.inputArrows {
+  -moz-appearance: textfield !important;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+  color: black;
+}
+
+.inputField {
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+}
+
+.inputFieldBase {
+  border: 1px solid #e5e5e5;
+  background-color: white;
+}
+
+.inputFieldError {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.295);
+}
+
+.inputFieldSuccess {
+  border: 1px solid black;
+  background-color: #00000008;
+}
+
+.inputFieldError input::placeholder {
+  color: black !important;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  padding: 6px 10px;
+  width: 100%;
+  caret-color: blue;
+  color: gray;
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon svg {
+  margin-right: 3px;
+}
+
+.componentContainer {
+  position: relative;
+}
+
+.componentContainer span {
+  color: gray;
+}
+.componentContainer svg {
+  font-size: 20px;
+}
+.alertIcon {
+  color: red;
+}
+.eyeIcon {
+  cursor: pointer;
+}
+.successIcon {
+  color: green;
+}
+
+.errorMessageClassName {
+  min-height: 20px;
+  padding: 1px 5px 0;
+  width: 100%;
+  margin-top: 1px;
+  line-height: 15px;
+  font-size: 13px;
+  text-align: center;
+  color: red;
+}
