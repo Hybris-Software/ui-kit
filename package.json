@@ -1,6 +1,6 @@
 {
   "name": "@hybris-software/ui-kit",
-  "version": "2.1.13",
+  "version": "2.1.14",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -18,13 +18,11 @@
     "dist",
     "README.md"
   ],
-  "devDependencies": {
+  "dependencies": {
     "@babel/cli": "^7.19.3",
     "@babel/core": "^7.19.3",
     "@babel/plugin-syntax-jsx": "^7.18.6",
-    "@babel/preset-env": "^7.19.4"
-  },
-  "dependencies": {
+    "@babel/preset-env": "^7.19.4",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-react": "^7.18.6",
     "react": "^18.2.0",
