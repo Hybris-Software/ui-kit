@@ -20,8 +20,6 @@ const Col = ({
   children,
   colsize,
   marginbottom,
-  ref,
-  extraProps,
 }) => {
   const themeContext = useContext(ThemeContext);
 
@@ -33,8 +31,6 @@ const Col = ({
 
   return (
     <div
-      ref={ref}
-      {...extraProps}
       className={classNames(
         orderSm && Style[`order-sm-${orderSm}`],
         orderMd && Style[`order-md-${orderMd}`],
