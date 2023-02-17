@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 
 // Icons
 import { FiAlertTriangle } from "react-icons/fi";
@@ -16,7 +16,7 @@ import Style from "./InputField.module.css";
 import ThemeContext from "../../Contexts/ThemeContext";
 
 const InputField = ({
-  autoComplete = 'new-password',
+  autoComplete = "new-password",
   icon = null,
   className,
   baseClassName,
@@ -50,7 +50,11 @@ const InputField = ({
   onChange = () => {},
   readOnly = false,
   inputId,
+  inputRef,
 }) => {
+  const defaultRef = useRef(null);
+  const computedInputRef = inputRef || defaultRef;
+
   // Variables
   const [inputType, setInputType] = useState(type);
   const [eyeIconVisibility, setEyeIconVisibility] = useState(false);
@@ -168,6 +172,7 @@ const InputField = ({
         <span>{icon && icon}</span>
         {/* Input */}
         <input
+          ref={computedInputRef}
           className={classNames(
             Style.input,
             showArrows === false && Style.inputArrows
