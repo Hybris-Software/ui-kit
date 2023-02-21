@@ -27,14 +27,12 @@
   display: flex;
   align-items: center;
 }
-.selected .arrow svg {
+.selected .arrow {
   margin-right: 0;
-  transition: all 0.3s ease;
 }
-.selected .arrowOpened svg {
+.selected .arrowOpened {
   transform: rotate(180deg);
   margin-right: 0;
-  transition: all 0.3s ease;
 }
 
 .options > div,

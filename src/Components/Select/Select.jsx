@@ -67,8 +67,9 @@ const Select = forwardRef(
     // Const
     const computedItems = items || [];
     const isObject = computedItems.some((el) => typeof el === "object");
-    const seconds =
-      parseFloat(styleClosed.transition.match(/(\d+(?:\.\d+)?)s/)[1]) * 1000;
+    const seconds = parseFloat(
+      styleClosed.transition.match(/(\d+(?:\.\d+)?)s/)[1]
+    );
 
     // Refs
     const defaultRef = useRef(null);
@@ -187,7 +188,7 @@ const Select = forwardRef(
             if (scrollToTopOnClose) {
               setTimeout(() => {
                 selectOpenedRef.current.scrollTop = 0;
-              }, seconds);
+              }, seconds * 1000);
             }
           }}
         >
