@@ -201,7 +201,7 @@ const Select = forwardRef(
                   value
                 )
               ) : (
-                <span className={Style.placeholderClassName}>
+                <span className={computedClassNamePlaceholder}>
                   {placeholder}
                 </span>
               )}
