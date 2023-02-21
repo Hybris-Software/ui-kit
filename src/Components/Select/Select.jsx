@@ -84,13 +84,11 @@ const Select = forwardRef(
           setPosition("top");
           selectOpened.style.bottom = `${childRef.current.clientHeight}px`;
           selectOpened.style.top = `auto`;
-          selectOpened.style.borderTopColor = "inherit";
         }
         if (windowHeight - selectTop >= maxHeightOpened) {
           setPosition("bottom");
           selectOpened.style.top = `${childRef.current.clientHeight}px`;
           selectOpened.style.bottom = "auto";
-          selectOpened.style.borderBottomColor = "inherit";
         }
       }
     };
