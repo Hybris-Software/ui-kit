@@ -21,6 +21,7 @@ import ThemeContext from "../../Contexts/ThemeContext";
 const Select = forwardRef(
   (
     {
+      style,
       className,
       classNameOpened,
       classNameOption,
@@ -29,6 +30,7 @@ const Select = forwardRef(
       items,
       label,
       value,
+      icon = <IoIosArrowDown />,
       maxHeightOpened = 150,
       styleOpened = {
         maxHeight: maxHeightOpened,
@@ -68,6 +70,7 @@ const Select = forwardRef(
     // Refs
     const defaultRef = useRef(null);
     const selectRef = ref || defaultRef;
+    const childRef = useRef(null);
     const selectOpenedRef = useRef(null);
 
     // Methods
@@ -98,9 +101,8 @@ const Select = forwardRef(
     }));
 
     // Functions
-    const checkPosition = (refSelect, refOpened, state) => {
+    const checkPosition = (refOpened, state) => {
       selectRef.current.toggle();
-      const refSelectClose = refSelect.current;
       const selectOpened = refOpened.current;
       const selectTop = selectOpened.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
@@ -108,21 +110,15 @@ const Select = forwardRef(
       if (!state) {
         if (windowHeight - selectTop < maxHeightOpened) {
           setPosition("top");
-          selectOpened.style.bottom = `${refSelectClose.clientHeight}px`;
+          selectOpened.style.bottom = `${childRef.current.clientHeight}px`;
           selectOpened.style.top = `auto`;
           selectOpened.style.borderTopColor = "inherit";
-          selectOpened.style.borderBottomColor = "transparent";
-          selectOpened.style.borderRadius = "3px 3px 0 0";
-          refSelectClose.style.borderRadius = "0 0 3px 3px";
         }
         if (windowHeight - selectTop >= maxHeightOpened) {
           setPosition("bottom");
-          selectOpened.style.top = `${refSelectClose.clientHeight}px`;
+          selectOpened.style.top = `${childRef.current.clientHeight}px`;
           selectOpened.style.bottom = "auto";
-          selectOpened.style.borderTopColor = "transparent";
           selectOpened.style.borderBottomColor = "inherit";
-          selectOpened.style.borderRadius = "0 0 3px 3px";
-          refSelectClose.style.borderRadius = "3px 3px 0 0";
         }
       }
     };
@@ -149,64 +145,92 @@ const Select = forwardRef(
       Style.selectClassOption;
 
     return (
-      <div
-        ref={selectRef}
-        style={{ position: "relative" }}
-        className={classNames(Style.select, computedClassName)}
-        onClick={() => {
-          checkPosition(selectRef, selectOpenedRef, open);
-          if (open === true) selectRef.current.style.borderRadius = "3px";
-        }}
-        onMouseLeave={() => {
-          selectRef.current.close();
-          position === "top"
-            ? (selectOpenedRef.current.style.bottom = "0")
-            : (selectOpenedRef.current.style.top = "0");
-          selectRef.current.style.borderRadius = "3px";
-        }}
-      >
-        <div className={Style.selected}>
-          <span>{selectedItem || placeholder}</span>
-          <span className={open ? Style.arrowOpened : Style.arrow}>
-            <IoIosArrowDown />
-          </span>
-        </div>
-
+      <div ref={selectRef} style={style}>
         <div
-          ref={selectOpenedRef}
-          className={computedClassNameOpened}
-          style={open ? styleOpened : styleClosed}
+          ref={childRef}
+          style={
+            !open
+              ? { position: "relative" }
+              : position === "top"
+              ? {
+                  position: "relative",
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                }
+              : {
+                  position: "relative",
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                }
+          }
+          className={classNames(Style.select, computedClassName)}
+          onClick={() => {
+            checkPosition(selectOpenedRef, open);
+          }}
+          onMouseLeave={() => {
+            selectRef.current.close();
+            position === "top"
+              ? (selectOpenedRef.current.style.bottom = "0")
+              : (selectOpenedRef.current.style.top = "0");
+          }}
         >
-          {isntNormalList
-            ? computedItems
-                .filter((item) => item.searchable !== false)
-                .map((option, i) => (
+          <div className={Style.selected}>
+            <span>{selectedItem || placeholder}</span>
+            <span className={open ? Style.arrowOpened : Style.arrow}>
+              {icon}
+            </span>
+          </div>
+
+          <div
+            ref={selectOpenedRef}
+            className={computedClassNameOpened}
+            style={
+              open
+                ? position === "top"
+                  ? {
+                      ...styleOpened,
+                      borderBottomLeftRadius: 0,
+                      borderBottomRightRadius: 0,
+                    }
+                  : {
+                      ...styleOpened,
+                      borderTopLeftRadius: 0,
+                      borderTopRightRadius: 0,
+                    }
+                : styleClosed
+            }
+          >
+            {isntNormalList
+              ? computedItems
+                  .filter((item) => item.searchable !== false)
+                  .map((option, i) => (
+                    <div
+                      key={i}
+                      className={computedClassNameOption}
+                      onClick={() => {
+                        const tmpValue = option[value]
+                          ? option[value]
+                          : option.value;
+                        selectRef.current.setValue(tmpValue);
+                        onSelectChange(tmpValue);
+                      }}
+                    >
+                      {label ? option[label] : option.label}
+                    </div>
+                  ))
+              : computedItems.map((option, i) => (
                   <div
                     key={i}
                     className={computedClassNameOption}
                     onClick={() => {
-                      const tmpValue = option[value]
-                        ? option[value]
-                        : option.value;
-                      selectRef.current.setValue(tmpValue);
-                      onSelectChange(tmpValue);
+                      selectRef.current.setValue(option);
+                      onSelectChange(option);
                     }}
                   >
-                    {label ? option[label] : option.label}
+                    {option}
                   </div>
-                ))
-            : computedItems.map((option, i) => (
-                <div
-                  key={i}
-                  className={computedClassNameOption}
-                  onClick={() => {
-                    selectRef.current.setValue(option);
-                    onSelectChange(option);
-                  }}
-                >
-                  {option}
-                </div>
-              ))}
+                ))}
+          </div>
         </div>
       </div>
     );
