@@ -32,6 +32,7 @@ const Select = forwardRef(
       items,
       labelKey = "label",
       icon = <IoIosArrowDown />,
+      iconTransitionSpeed,
       scrollToTopOnClose = true,
       maxHeightOpened = 150,
       styleOpened = {
@@ -66,6 +67,8 @@ const Select = forwardRef(
     // Const
     const computedItems = items || [];
     const isObject = computedItems.some((el) => typeof el === "object");
+    const seconds =
+      parseFloat(styleClosed.transition.match(/(\d+(?:\.\d+)?)s/)[1]) * 1000;
 
     // Refs
     const defaultRef = useRef(null);
@@ -126,6 +129,7 @@ const Select = forwardRef(
       },
     }));
 
+    // Theme Classes
     const computedClassName =
       className ||
       (themeContext.theme &&
@@ -179,9 +183,6 @@ const Select = forwardRef(
           }}
           onMouseLeave={() => {
             selectRef.current.close();
-            const seconds =
-              parseFloat(styleClosed.transition.match(/(\d+(?:\.\d+)?)s/)[1]) *
-              1000;
 
             if (scrollToTopOnClose) {
               setTimeout(() => {
@@ -204,7 +205,10 @@ const Select = forwardRef(
                 </span>
               )}
             </span>
-            <span className={open ? Style.arrowOpened : Style.arrow}>
+            <span
+              className={open ? Style.arrowOpened : Style.arrow}
+              style={{ transition: `all ${iconTransitionSpeed || seconds}s` }}
+            >
               {icon}
             </span>
           </div>
