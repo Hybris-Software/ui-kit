@@ -26,14 +26,14 @@ const Select = forwardRef(
       classNameOpened,
       classNameOption,
       placeholder,
+      value,
       setValue,
       items,
-      label,
-      value,
+      labelKey = "label",
       icon = <IoIosArrowDown />,
+      scrollToTopOnClose = true,
       maxHeightOpened = 150,
       styleOpened = {
-        maxHeight: maxHeightOpened,
         overflow: "auto",
         position: "absolute",
         opacity: 1,
@@ -61,11 +61,10 @@ const Select = forwardRef(
     // States
     const [open, setOpen] = useState(false);
     const [position, setPosition] = useState("");
-    const [selectedItem, setSelectedItem] = useState(null);
 
     // Const
     const computedItems = items || [];
-    const isntNormalList = computedItems.some((el) => typeof el === "object");
+    const isObject = computedItems.some((el) => typeof el === "object");
 
     // Refs
     const defaultRef = useRef(null);
@@ -73,36 +72,8 @@ const Select = forwardRef(
     const childRef = useRef(null);
     const selectOpenedRef = useRef(null);
 
-    // Methods
-    useImperativeHandle(selectRef, () => ({
-      open: () => {
-        setOpen(true);
-        onSelectOpen();
-      },
-      close: () => {
-        setOpen(false);
-        onSelectClose();
-      },
-      toggle: () =>
-        setOpen((OldState) => {
-          if (OldState) {
-            onSelectClose();
-          } else {
-            onSelectOpen();
-          }
-          return !OldState;
-        }),
-      getValue: () => value,
-      setValue: (value) => {
-        setValue(value);
-        setSelectedItem(value);
-        onSelectChange(value);
-      },
-    }));
-
     // Functions
     const checkPosition = (refOpened, state) => {
-      selectRef.current.toggle();
       const selectOpened = refOpened.current;
       const selectTop = selectOpened.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
@@ -122,6 +93,39 @@ const Select = forwardRef(
         }
       }
     };
+
+    // Methods
+    useImperativeHandle(selectRef, () => ({
+      open: () => {
+        checkPosition(selectOpenedRef, open);
+        setOpen(true);
+        onSelectOpen();
+      },
+      close: () => {
+        position === "top"
+          ? (selectOpenedRef.current.style.bottom = "0")
+          : (selectOpenedRef.current.style.top = "0");
+        checkPosition(selectOpenedRef, open);
+        setOpen(false);
+        onSelectClose();
+      },
+      toggle: () => {
+        checkPosition(selectOpenedRef, open);
+        setOpen((OldState) => {
+          if (OldState) {
+            onSelectClose();
+          } else {
+            onSelectOpen();
+          }
+          return !OldState;
+        });
+      },
+      getValue: () => value,
+      updateValue: (value) => {
+        setValue(value);
+        onSelectChange(value);
+      },
+    }));
 
     const computedClassName =
       className ||
@@ -165,17 +169,25 @@ const Select = forwardRef(
           }
           className={classNames(Style.select, computedClassName)}
           onClick={() => {
-            checkPosition(selectOpenedRef, open);
+            selectRef.current.toggle();
           }}
           onMouseLeave={() => {
             selectRef.current.close();
-            position === "top"
-              ? (selectOpenedRef.current.style.bottom = "0")
-              : (selectOpenedRef.current.style.top = "0");
+            const seconds =
+              parseFloat(styleClosed.transition.match(/(\d+(?:\.\d+)?)s/)[1]) *
+              1000;
+
+            if (scrollToTopOnClose) {
+              setTimeout(() => {
+                selectOpenedRef.current.scrollTop = 0;
+              }, seconds);
+            }
           }}
         >
           <div className={Style.selected}>
-            <span>{selectedItem || placeholder}</span>
+            <span>
+              {value ? (isObject ? value[labelKey] : value) : placeholder}
+            </span>
             <span className={open ? Style.arrowOpened : Style.arrow}>
               {icon}
             </span>
@@ -191,16 +203,18 @@ const Select = forwardRef(
                       ...styleOpened,
                       borderBottomLeftRadius: 0,
                       borderBottomRightRadius: 0,
+                      maxHeight: maxHeightOpened,
                     }
                   : {
                       ...styleOpened,
                       borderTopLeftRadius: 0,
                       borderTopRightRadius: 0,
+                      maxHeight: maxHeightOpened,
                     }
                 : styleClosed
             }
           >
-            {isntNormalList
+            {isObject
               ? computedItems
                   .filter((item) => item.searchable !== false)
                   .map((option, i) => (
@@ -208,14 +222,10 @@ const Select = forwardRef(
                       key={i}
                       className={computedClassNameOption}
                       onClick={() => {
-                        const tmpValue = option[value]
-                          ? option[value]
-                          : option.value;
-                        selectRef.current.setValue(tmpValue);
-                        onSelectChange(tmpValue);
+                        selectRef.current.updateValue(option);
                       }}
                     >
-                      {label ? option[label] : option.label}
+                      {option[labelKey]}
                     </div>
                   ))
               : computedItems.map((option, i) => (
@@ -223,8 +233,7 @@ const Select = forwardRef(
                     key={i}
                     className={computedClassNameOption}
                     onClick={() => {
-                      selectRef.current.setValue(option);
-                      onSelectChange(option);
+                      selectRef.current.updateValue(option);
                     }}
                   >
                     {option}
