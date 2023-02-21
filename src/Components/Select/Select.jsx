@@ -44,7 +44,6 @@ const Select = forwardRef(
         visibility: "visible",
       },
       styleClosed = {
-        maxHeight: 0,
         overflow: "hidden",
         position: "absolute",
         visibility: "hidden",
@@ -232,7 +231,7 @@ const Select = forwardRef(
                       borderTopRightRadius: 0,
                       maxHeight: maxHeightOpened,
                     }
-                : styleClosed
+                : { ...styleClosed, maxHeight: 0 }
             }
           >
             {isObject
