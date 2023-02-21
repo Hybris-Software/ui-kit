@@ -25,6 +25,7 @@ const Select = forwardRef(
       className,
       classNameOpened,
       classNameOption,
+      classNamePlaceholder,
       placeholder,
       value,
       setValue,
@@ -148,6 +149,13 @@ const Select = forwardRef(
         themeContext.theme.select.selectOptionClassName) ||
       Style.selectClassOption;
 
+    const computedClassNamePlaceholder =
+      classNamePlaceholder ||
+      (themeContext.theme &&
+        themeContext.theme.select &&
+        themeContext.theme.select.selectPlaceholderClassName) ||
+      Style.selectClassPlaceholder;
+
     return (
       <div ref={selectRef} style={style}>
         <div
@@ -186,7 +194,17 @@ const Select = forwardRef(
         >
           <div className={Style.selected}>
             <span>
-              {value ? (isObject ? value[labelKey] : value) : placeholder}
+              {value ? (
+                isObject ? (
+                  value[labelKey]
+                ) : (
+                  value
+                )
+              ) : (
+                <span className={Style.placeholderClassName}>
+                  {placeholder}
+                </span>
+              )}
             </span>
             <span className={open ? Style.arrowOpened : Style.arrow}>
               {icon}

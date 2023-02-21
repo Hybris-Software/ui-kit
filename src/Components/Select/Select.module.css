@@ -13,6 +13,9 @@
   font-size: 12px;
   background-color: white;
 }
+.selectClassPlaceholder {
+  color: grey;
+}
 .selected {
   width: 100%;
   display: flex;
