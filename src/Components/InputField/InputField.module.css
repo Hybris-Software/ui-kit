@@ -16,7 +16,7 @@ input.inputArrows {
 }
 
 .inputField {
-  border-radius: 6px;
+  border-radius: 3px;
   position: relative;
   display: flex;
 }
