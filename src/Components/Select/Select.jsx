@@ -54,6 +54,8 @@ const Select = forwardRef(
       onSelectOpen = () => {},
       onSelectClose = () => {},
       onSelectChange = () => {},
+      renderOption = (item, fullItem) => item,
+      renderPlaceholder = (item) => item,
     },
     ref
   ) => {
@@ -201,7 +203,7 @@ const Select = forwardRef(
                 )
               ) : (
                 <span className={computedClassNamePlaceholder}>
-                  {placeholder}
+                  {renderPlaceholder}
                 </span>
               )}
             </span>
@@ -245,7 +247,7 @@ const Select = forwardRef(
                         selectRef.current.updateValue(option);
                       }}
                     >
-                      {option[labelKey]}
+                      {renderOption(option[labelKey], option)}
                     </div>
                   ))
               : computedItems.map((option, i) => (
@@ -256,7 +258,7 @@ const Select = forwardRef(
                       selectRef.current.updateValue(option);
                     }}
                   >
-                    {option}
+                    {renderOption(option)}
                   </div>
                 ))}
           </div>
