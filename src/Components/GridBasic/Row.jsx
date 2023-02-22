@@ -79,6 +79,14 @@ function getColGap(gapBreakPoints, windowSize) {
   return colGap;
 }
 
+/**
+ * @param {Object} props - props
+ * @param {string} props.className - Class name for the row
+ * @param {JSX.Element} props.children - Children
+ * @param {Object} props.columnGap - Column gap
+ * @param {boolean} props.useGap - Use gap
+ */
+
 const Row = ({ className, style, children, columnGap, useGap = true }) => {
   const childrenList = Children.toArray(children);
 
@@ -93,34 +101,34 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
   const windowSize = themeContext.windowSize;
 
   const computedClassName =
-    themeContext.theme &&
-    themeContext.theme.row &&
-    themeContext.theme.row.rowClassName
-      ? themeContext.theme.row.rowClassName
+    themeContext?.theme &&
+    themeContext?.theme?.row &&
+    themeContext?.theme?.row?.rowClassName
+      ? themeContext?.theme?.row?.rowClassName
       : "";
 
   useEffect(() => {
     if (windowSize) {
       const columnHorizontalGap = !useGap
         ? 0
-        : columnGap && columnGap.horizontal
-        ? getColGap(columnGap.horizontal, windowSize)
+        : columnGap && columnGap?.horizontal
+        ? getColGap(columnGap?.horizontal, windowSize)
         : themeContext.theme &&
-          themeContext.theme.row &&
-          themeContext.theme.row.columnGap &&
-          themeContext.theme.row.columnGap.horizontal
-        ? getColGap(themeContext.theme.row.columnGap.horizontal, windowSize)
+          themeContext.theme?.row &&
+          themeContext.theme?.row?.columnGap &&
+          themeContext.theme?.row?.columnGap?.horizontal
+        ? getColGap(themeContext.theme?.row?.columnGap?.horizontal, windowSize)
         : 0;
 
       const columnVerticalGap = !useGap
         ? 0
-        : columnGap && columnGap.vertical
-        ? getColGap(columnGap.vertical, windowSize)
+        : columnGap && columnGap?.vertical
+        ? getColGap(columnGap?.vertical, windowSize)
         : themeContext.theme &&
-          themeContext.theme.row &&
-          themeContext.theme.row.columnGap &&
-          themeContext.theme.row.columnGap.vertical
-        ? getColGap(themeContext.theme.row.columnGap.vertical, windowSize)
+          themeContext.theme?.row &&
+          themeContext.theme?.row?.columnGap &&
+          themeContext.theme?.row?.columnGap?.vertical
+        ? getColGap(themeContext.theme?.row?.columnGap?.vertical, windowSize)
         : 0;
 
       const newHorizontalGaps = [];
@@ -158,7 +166,10 @@ const Row = ({ className, style, children, columnGap, useGap = true }) => {
   }, [windowSize, columnGap, children, useGap]);
 
   return (
-    <div className={classNames(Style.row, computedClassName, className)} style={style}>
+    <div
+      className={classNames(Style.row, computedClassName, className)}
+      style={style}
+    >
       {childrenList.map((child, index) => {
         if (isValidElement(child)) {
           const colWidth = getColWidth(child.props, windowSize);

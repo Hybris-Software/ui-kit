@@ -12,6 +12,19 @@ import Style from "./Button.module.css";
 // Contexts
 import ThemeContext from "../../Contexts/ThemeContext";
 
+/**
+ * @param {Object} props - props
+ * @param {string} props.buttonClassName - Class name for the button
+ * @param {string} props.disabledClassName - Class name for the disabled button
+ * @param {JSX.Element} props.children - Children
+ * @param {string} props.className - Class name for the button
+ * @param {boolean} props.disabled - Disabled
+ * @param {boolean} props.isLoading - Is loading
+ * @param {JSX.Element} props.loader - Loader
+ * @param {function} props.onClick - On click
+ * @param {Object} props.style - Style
+ */
+
 const Button = ({
   buttonClassName,
   disabledClassName,
@@ -27,22 +40,22 @@ const Button = ({
 
   const computedClassName =
     buttonClassName ||
-    (themeContext.theme &&
-      themeContext.theme.button &&
-      themeContext.theme.button.buttonClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.button &&
+      themeContext?.theme?.button?.buttonClassName) ||
     Style.buttonClass;
 
   const computedDisabledClassName =
     disabledClassName ||
-    (themeContext.theme &&
-      themeContext.theme.button &&
-      themeContext.theme.button.buttonDisabledClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.button &&
+      themeContext?.theme?.button?.buttonDisabledClassName) ||
     Style.buttonDisabled;
 
   const buttonLoader = loader ||
-    (themeContext.theme &&
-      themeContext.theme.button &&
-      themeContext.theme.button.loader) || <TailSpin height={25} />;
+    (themeContext?.theme &&
+      themeContext?.theme?.button &&
+      themeContext?.theme?.button?.loader) || <TailSpin height={25} />;
 
   return (
     <div

@@ -9,6 +9,20 @@ import Style from "./GridBasic.module.css";
 // Contexts
 import ThemeContext from "../../Contexts/ThemeContext";
 
+/**
+ * @param {Object} props - props
+ * @param {number} props.orderSm - Order for small screens
+ * @param {number} props.orderMd - Order for medium screens
+ * @param {number} props.orderLg - Order for large screens
+ * @param {number} props.orderXl - Order for extra large screens
+ * @param {number} props.orderXxl - Order for extra extra large screens
+ * @param {string} props.className - Class name for the column
+ * @param {JSX.Element} props.children - Children
+ * @param {number} props.colsize - Column size
+ * @param {number} props.marginbottom - Margin bottom
+ * @param {Object} props.style - Style
+ */
+
 const Col = ({
   orderSm,
   orderMd,
@@ -24,9 +38,9 @@ const Col = ({
   const themeContext = useContext(ThemeContext);
 
   const columnStyle =
-    (themeContext.theme &&
-      themeContext.theme.col &&
-      themeContext.theme.col.columnStyle) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.col &&
+      themeContext?.theme?.col?.columnStyle) ||
     "";
 
   return (

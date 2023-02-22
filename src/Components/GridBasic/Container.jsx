@@ -9,13 +9,19 @@ import Style from "./GridBasic.module.css";
 // Contexts
 import ThemeContext from "../../Contexts/ThemeContext";
 
+/**
+ * @param {Object} props - props
+ * @param {string} props.className - Class name for the container
+ * @param {JSX.Element} props.children - Children
+ */
+
 const Container = ({ className, style, children }) => {
   const themeContext = useContext(ThemeContext);
 
   const computedClassName =
-    (themeContext.theme &&
-      themeContext.theme.container &&
-      themeContext.theme.container.containerClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.container &&
+      themeContext?.theme?.container?.containerClassName) ||
     "";
 
   return (

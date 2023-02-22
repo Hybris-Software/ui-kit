@@ -68,6 +68,25 @@ function isSafariDesktop() {
   }
 }
 
+/**
+ * @param {string} animation - Animation type
+ * @param {number} animationDuration - Animation duration
+ * @param {boolean} disableDrag - Disable drag
+ * @param {boolean} autoPlay - Enable autoplay
+ * @param {number} autoPlayTransitionSpeed - Autoplay transition speed
+ * @param {number} autoPlaySpeed - Autoplay speed
+ * @param {Object} breakPoints - Breakpoints
+ * @param {string} buttonClass - Class name for the buttons
+ * @param {JSX.Element} children - Children
+ * @param {number} dragSlideRatio - Drag slide ratio
+ * @param {number} gap - Gap between elements
+ * @param {string} nextChild - Next child
+ * @param {boolean} paginationButtons - Enable pagination buttons
+ * @param {string} paginationClass - Class name for the pagination buttons
+ * @param {string} prevChild - Previous child
+ * @param {number} slidePerView - Number of elements per view
+ */
+
 const SimpleSlider = ({
   animation = "ease",
   animationDuration = 200,

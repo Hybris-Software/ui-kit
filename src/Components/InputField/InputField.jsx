@@ -15,6 +15,45 @@ import Style from "./InputField.module.css";
 // Contexts
 import ThemeContext from "../../Contexts/ThemeContext";
 
+/**
+ * @param {Object} props - props
+ * @param {string} props.autoComplete - Auto complete
+ * @param {JSX.Element} props.icon - Icon
+ * @param {string} props.className - Class name for the input field
+ * @param {string} props.baseClassName - Base class name for the input field
+ * @param {string} props.successClassName - Success class name for the input field
+ * @param {string} props.errorMessageClassName - Error message class name for the input field
+ * @param {string} props.errorClassName - Error class name for the input field
+ * @param {string} props.labelClassName - Label class name for the input field
+ * @param {boolean} props.isValid - Is valid
+ * @param {string} props.errorDetails - Error details
+ * @param {string} props.type - Type
+ * @param {string} props.label - Label
+ * @param {boolean} props.onPaste - On paste
+ * @param {boolean} props.onCopy - On copy
+ * @param {string} props.placeholder - Placeholder
+ * @param {function} props.setValue - Set value
+ * @param {function} props.setShowErrors - Set show errors
+ * @param {Object} props.style - Style
+ * @param {boolean} props.errorIconVisibility - Error icon visibility
+ * @param {JSX.Element} props.errorIcon - Error icon
+ * @param {boolean} props.successIconVisibility - Success icon visibility
+ * @param {JSX.Element} props.successIcon - Success icon
+ * @param {boolean} props.showPasswordIconVisibility - Show password icon visibility
+ * @param {JSX.Element} props.showPasswordIcon - Show password icon
+ * @param {JSX.Element} props.showPasswordIconOff - Show password icon off
+ * @param {boolean} props.showArrows - Show arrows
+ * @param {string} props.value - Value
+ * @param {boolean} props.showError - Show error
+ * @param {number} props.maxLength - Max length
+ * @param {function} props.onBlur - On blur
+ * @param {function} props.onInput - On input
+ * @param {function} props.onChange - On change
+ * @param {boolean} props.readOnly - Read only
+ * @param {string} props.inputId - Input id
+ * @param {Object} props.inputRef - Input ref
+ */
+
 const InputField = ({
   autoComplete = "new-password",
   icon = null,
