@@ -8,5 +8,18 @@ import Select from "./Components/Select/Select";
 import SimpleSlider from "./Components/SimpleSlider/SimpleSlider";
 import ThemeProvider from "./Components/ThemeProvider/ThemeProvider";
 import useWindowSize from "./Utils/useWindowSize";
+import MagicModal from "./Components/MagicPopup/MagicModal";
 
-export { Button, Col, Container, InputField, TextField, Row, Select, SimpleSlider, ThemeProvider, useWindowSize };
+export {
+  Button,
+  Col,
+  Container,
+  InputField,
+  TextField,
+  Row,
+  Select,
+  SimpleSlider,
+  ThemeProvider,
+  useWindowSize,
+  MagicModal,
+};
