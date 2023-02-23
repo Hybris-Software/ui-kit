@@ -21,7 +21,7 @@ import ThemeContext from "../../Contexts/ThemeContext";
 
 /**
  * @param {Object} props - props
- * @param {Object} props.body -
+ * @param {Object} props.body - Body
  * @param {Object} props.contentStyle - Style for the content
  * @param {string} props.contentClassName - Class name for the content
  * @param {Object} props.overlayStyle - Style for the overlay
@@ -84,34 +84,34 @@ const ModalComponent = (
     () => ({
       // Styles
       computedContentStyle:
-        computedBody.modalOptions?.contentStyle || contentStyle,
+        computedBody?.modalOptions?.contentStyle || contentStyle,
       computedOverlayStyle:
-        computedBody.modalOptions?.overlayStyle || overlayStyle,
-      computedModalStyle: computedBody.modalOptions?.modalStyle || modalStyle,
+        computedBody?.modalOptions?.overlayStyle || overlayStyle,
+      computedModalStyle: computedBody?.modalOptions?.modalStyle || modalStyle,
       computedCloseIconStyle:
-        computedBody.modalOptions?.closeIconStyle || closeIconStyle,
+        computedBody?.modalOptions?.closeIconStyle || closeIconStyle,
 
       // Classes
       computedContentClassName:
-        computedBody.modalOptions?.contentClassName ||
+        computedBody?.modalOptions?.contentClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.contentClassName) ||
         contentClassName,
       computedOverlayClassName:
-        computedBody.modalOptions?.overlayClassName ||
+        computedBody?.modalOptions?.overlayClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.overlayClassName) ||
         overlayClassName,
       computedModalClassName:
-        computedBody.modalOptions?.modalClassName ||
+        computedBody?.modalOptions?.modalClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.modalClassName) ||
         modalClassName,
       computedCloseIconClassName:
-        computedBody.modalOptions?.closeIconClassName ||
+        computedBody?.modalOptions?.closeIconClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.closeIconClassName) ||
@@ -119,22 +119,26 @@ const ModalComponent = (
 
       // Events
       computedOnModalClose:
-        computedBody.modalOptions?.onModalClose || onModalClose,
+        computedBody?.modalOptions?.onModalClose || onModalClose,
       computedOnModalOpen:
-        computedBody.modalOptions?.onModalOpen || onModalOpen,
+        computedBody?.modalOptions?.onModalOpen || onModalOpen,
       computedOnBodyUpdate:
-        computedBody.modalOptions?.onBodyUpdate || onBodyUpdate,
+        computedBody?.modalOptions?.onBodyUpdate || onBodyUpdate,
       computedOnModalDestroy:
-        computedBody.modalOptions?.onModalDestroy || onModalDestroy,
+        computedBody?.modalOptions?.onModalDestroy || onModalDestroy,
       computedOnCloseIconClick:
-        computedBody.modalOptions?.onCloseIconClick || onCloseIconClick,
+        computedBody?.modalOptions?.onCloseIconClick || onCloseIconClick,
 
       // Other
-      computedCloseIcon: computedBody.modalOptions?.closeIcon || closeIcon,
+      computedCloseIcon: computedBody?.modalOptions?.closeIcon || closeIcon,
       computedShowCloseIcon:
-        computedBody.modalOptions?.showCloseIcon || showCloseIcon,
+        computedBody?.modalOptions?.showCloseIcon !== undefined
+          ? computedBody?.modalOptions?.showCloseIcon
+          : showCloseIcon,
       computedDestroyBodyOnClose:
-        computedBody.modalOptions?.destroyBodyOnClose || destroyBodyOnClose,
+        computedBody?.modalOptions?.destroyBodyOnClose !== undefined
+          ? computedBody?.modalOptions?.destroyBodyOnClose
+          : destroyBodyOnClose,
     }),
     [
       contentStyle,
@@ -256,7 +260,7 @@ const ModalComponent = (
                 </span>
               </div>
             )}
-            {computedBody.body}
+            {computedBody?.body}
           </div>
         </div>
       </div>
