@@ -1,0 +1,39 @@
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  background: rgba(113, 113, 113, 0.5);
+}
+
+.modalWindow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: calc(100% - 20px);
+  max-height: calc(100vh - 100px);
+}
+
+.modal {
+  border-radius: 10px;
+  max-width: 450px;
+  background-color: white;
+}
+
+.content {
+  padding: 10px 15px 15px;
+}
+
+.hideModal {
+  text-align: right;
+}
+
+.hideButton:hover {
+  cursor: pointer;
+  filter: brightness(0.8);
+}

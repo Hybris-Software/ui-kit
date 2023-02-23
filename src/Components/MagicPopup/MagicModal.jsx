@@ -4,6 +4,7 @@ import React, {
   useState,
   useRef,
   useMemo,
+  useContext,
 } from "react";
 
 // Icons
@@ -45,12 +46,16 @@ const ModalComponent = (
     contentStyle,
     contentClassName = Style.content,
     overlayStyle,
-    overlayClassName,
+    overlayClassName = Style.overlay,
     modalStyle,
     modalClassName = Style.modal,
     closeIconStyle,
     closeIconClassName = Style.hideModal,
-    closeIcon = <AiOutlineClose />,
+    closeIcon = (
+      <span className={Style.hideButton}>
+        <AiOutlineClose />
+      </span>
+    ),
     showCloseIcon = true,
     destroyBodyOnClose = true,
     onModalOpen = () => {},
@@ -79,56 +84,57 @@ const ModalComponent = (
     () => ({
       // Styles
       computedContentStyle:
-        computedBody.modalOptions.contentStyle || contentStyle,
+        computedBody.modalOptions?.contentStyle || contentStyle,
       computedOverlayStyle:
-        computedBody.modalOptions.overlayStyle || overlayStyle,
-      computedModalStyle: computedBody.modalOptions.modalStyle || modalStyle,
+        computedBody.modalOptions?.overlayStyle || overlayStyle,
+      computedModalStyle: computedBody.modalOptions?.modalStyle || modalStyle,
       computedCloseIconStyle:
-        computedBody.modalOptions.closeIconStyle || closeIconStyle,
+        computedBody.modalOptions?.closeIconStyle || closeIconStyle,
 
       // Classes
       computedContentClassName:
-        computedBody.modalOptions.contentClassName ||
+        computedBody.modalOptions?.contentClassName ||
         (themeContext.theme &&
-          themeContext.theme.magicModal &&
-          themeContext.theme.magicModal.contentClassName) ||
+          themeContext.theme?.magicModal &&
+          themeContext.theme?.magicModal?.contentClassName) ||
         contentClassName,
       computedOverlayClassName:
-        computedBody.modalOptions.overlayClassName ||
+        computedBody.modalOptions?.overlayClassName ||
         (themeContext.theme &&
-          themeContext.theme.magicModal &&
-          themeContext.theme.magicModal.overlayClassName) ||
+          themeContext.theme?.magicModal &&
+          themeContext.theme?.magicModal?.overlayClassName) ||
         overlayClassName,
       computedModalClassName:
-        computedBody.modalOptions.modalClassName ||
+        computedBody.modalOptions?.modalClassName ||
         (themeContext.theme &&
-          themeContext.theme.magicModal &&
-          themeContext.theme.magicModal.modalClassName) ||
+          themeContext.theme?.magicModal &&
+          themeContext.theme?.magicModal?.modalClassName) ||
         modalClassName,
       computedCloseIconClassName:
-        computedBody.modalOptions.closeIconClassName ||
+        computedBody.modalOptions?.closeIconClassName ||
         (themeContext.theme &&
-          themeContext.theme.magicModal &&
-          themeContext.theme.magicModal.closeIconClassName) ||
+          themeContext.theme?.magicModal &&
+          themeContext.theme?.magicModal?.closeIconClassName) ||
         closeIconClassName,
 
       // Events
       computedOnModalClose:
-        computedBody.modalOptions.onModalClose || onModalClose,
-      computedOnModalOpen: computedBody.modalOptions.onModalOpen || onModalOpen,
+        computedBody.modalOptions?.onModalClose || onModalClose,
+      computedOnModalOpen:
+        computedBody.modalOptions?.onModalOpen || onModalOpen,
       computedOnBodyUpdate:
-        computedBody.modalOptions.onBodyUpdate || onBodyUpdate,
+        computedBody.modalOptions?.onBodyUpdate || onBodyUpdate,
       computedOnModalDestroy:
-        computedBody.modalOptions.onModalDestroy || onModalDestroy,
+        computedBody.modalOptions?.onModalDestroy || onModalDestroy,
       computedOnCloseIconClick:
-        computedBody.modalOptions.onCloseIconClick || onCloseIconClick,
+        computedBody.modalOptions?.onCloseIconClick || onCloseIconClick,
 
       // Other
-      computedCloseIcon: computedBody.modalOptions.closeIcon || closeIcon,
+      computedCloseIcon: computedBody.modalOptions?.closeIcon || closeIcon,
       computedShowCloseIcon:
-        computedBody.modalOptions.showCloseIcon || showCloseIcon,
+        computedBody.modalOptions?.showCloseIcon || showCloseIcon,
       computedDestroyBodyOnClose:
-        computedBody.modalOptions.destroyBodyOnClose || destroyBodyOnClose,
+        computedBody.modalOptions?.destroyBodyOnClose || destroyBodyOnClose,
     }),
     [
       contentStyle,
@@ -189,7 +195,7 @@ const ModalComponent = (
           } else {
             setOpen(true);
           }
-          setComputedBody(child.body);
+          setComputedBody(child);
           computedModalOptions.computedOnBodyUpdate();
           computedModalOptions.computedOnModalOpen();
         },

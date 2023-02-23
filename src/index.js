@@ -17,9 +17,9 @@ export {
   InputField,
   TextField,
   Row,
-  Select,
   SimpleSlider,
   ThemeProvider,
   useWindowSize,
+  Select,
   MagicModal,
 };
