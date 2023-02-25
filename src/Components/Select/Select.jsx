@@ -63,7 +63,7 @@ const SelectComponent = (
       overflow: "auto",
       position: "absolute",
       opacity: 1,
-      zIndex: 3,
+      zIndex: 5,
       transition: "all 0.3s",
       visibility: "visible",
     },
@@ -75,9 +75,9 @@ const SelectComponent = (
       zIndex: 3,
       opacity: 0,
     },
-    onSelectOpen = () => {},
-    onSelectClose = () => {},
-    onSelectChange = () => {},
+    onSelectOpen = () => { },
+    onSelectClose = () => { },
+    onSelectChange = () => { },
     renderOption = (item, fullItem) => item,
     renderPlaceholder = (item) => item,
   },
@@ -193,12 +193,12 @@ const SelectComponent = (
           !open
             ? { position: "relative" }
             : position === "top"
-            ? {
+              ? {
                 position: "relative",
                 borderTopLeftRadius: 0,
                 borderTopRightRadius: 0,
               }
-            : {
+              : {
                 position: "relative",
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
@@ -247,35 +247,24 @@ const SelectComponent = (
             open
               ? position === "top"
                 ? {
-                    ...styleOpened,
-                    borderBottomLeftRadius: 0,
-                    borderBottomRightRadius: 0,
-                    maxHeight: maxHeightOpened,
-                  }
+                  ...styleOpened,
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                  maxHeight: maxHeightOpened,
+                }
                 : {
-                    ...styleOpened,
-                    borderTopLeftRadius: 0,
-                    borderTopRightRadius: 0,
-                    maxHeight: maxHeightOpened,
-                  }
+                  ...styleOpened,
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  maxHeight: maxHeightOpened,
+                }
               : { ...styleClosed, maxHeight: 0 }
           }
         >
           {isObject
             ? computedItems
-                .filter((item) => item.searchable !== false)
-                .map((option, i) => (
-                  <div
-                    key={i}
-                    className={computedClassNameOption}
-                    onClick={() => {
-                      selectRef.current.updateValue(option);
-                    }}
-                  >
-                    {renderOption(option[labelKey], option)}
-                  </div>
-                ))
-            : computedItems.map((option, i) => (
+              .filter((item) => item.searchable !== false)
+              .map((option, i) => (
                 <div
                   key={i}
                   className={computedClassNameOption}
@@ -283,9 +272,20 @@ const SelectComponent = (
                     selectRef.current.updateValue(option);
                   }}
                 >
-                  {renderOption(option)}
+                  {renderOption(option[labelKey], option)}
                 </div>
-              ))}
+              ))
+            : computedItems.map((option, i) => (
+              <div
+                key={i}
+                className={computedClassNameOption}
+                onClick={() => {
+                  selectRef.current.updateValue(option);
+                }}
+              >
+                {renderOption(option)}
+              </div>
+            ))}
         </div>
       </div>
     </div>
