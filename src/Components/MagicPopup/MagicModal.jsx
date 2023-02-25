@@ -34,7 +34,7 @@ import ThemeContext from "../../Contexts/ThemeContext";
  * @param {boolean} props.showCloseIcon - Show close icon
  * @param {boolean} props.destroyBodyOnClose - Destroy body on close
  * @param {function} props.onModalOpen - On modal open
- * @param {function} props.onModalClose - On modal close
+ * @param {function} props.onModalHide - On modal close
  * @param {function} props.onBodyUpdate - On body update
  * @param {function} props.onModalDestroy - On modal destroy
  * @param {function} props.onCloseIconClick - On close icon click
@@ -59,7 +59,7 @@ const ModalComponent = (
     showCloseIcon = true,
     destroyBodyOnClose = true,
     onModalOpen = () => {},
-    onModalClose = () => {},
+    onModalHide = () => {},
     onBodyUpdate = () => {},
     onModalDestroy = () => {},
     onCloseIconClick = () => {},
@@ -70,10 +70,10 @@ const ModalComponent = (
   const themeContext = useContext(ThemeContext);
 
   // States
-  const [open, setOpen] = useState(false);
-  const [hide, setHide] = useState(!destroyBodyOnClose);
-  const [destroy, setDestroy] = useState(false);
+  const [hide, setHide] = useState(true);
+  const [destroy, setDestroy] = useState(true);
   const [computedBody, setComputedBody] = useState(body);
+  const [computedOptions, setComputedOptions] = useState({});
 
   // Refs
   const defaultRef = useRef(null);
@@ -83,61 +83,54 @@ const ModalComponent = (
   const computedModalOptions = useMemo(
     () => ({
       // Styles
-      computedContentStyle:
-        computedBody?.modalOptions?.contentStyle || contentStyle,
-      computedOverlayStyle:
-        computedBody?.modalOptions?.overlayStyle || overlayStyle,
-      computedModalStyle: computedBody?.modalOptions?.modalStyle || modalStyle,
-      computedCloseIconStyle:
-        computedBody?.modalOptions?.closeIconStyle || closeIconStyle,
+      computedContentStyle: computedOptions?.contentStyle || contentStyle,
+      computedOverlayStyle: computedOptions?.overlayStyle || overlayStyle,
+      computedModalStyle: computedOptions?.modalStyle || modalStyle,
+      computedCloseIconStyle: computedOptions?.closeIconStyle || closeIconStyle,
 
       // Classes
       computedContentClassName:
-        computedBody?.modalOptions?.contentClassName ||
+        computedOptions?.contentClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.contentClassName) ||
         contentClassName,
       computedOverlayClassName:
-        computedBody?.modalOptions?.overlayClassName ||
+        computedOptions?.overlayClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.overlayClassName) ||
         overlayClassName,
       computedModalClassName:
-        computedBody?.modalOptions?.modalClassName ||
+        computedOptions?.modalClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.modalClassName) ||
         modalClassName,
       computedCloseIconClassName:
-        computedBody?.modalOptions?.closeIconClassName ||
+        computedOptions?.closeIconClassName ||
         (themeContext.theme &&
           themeContext.theme?.magicModal &&
           themeContext.theme?.magicModal?.closeIconClassName) ||
         closeIconClassName,
 
       // Events
-      computedOnModalClose:
-        computedBody?.modalOptions?.onModalClose || onModalClose,
-      computedOnModalOpen:
-        computedBody?.modalOptions?.onModalOpen || onModalOpen,
-      computedOnBodyUpdate:
-        computedBody?.modalOptions?.onBodyUpdate || onBodyUpdate,
-      computedOnModalDestroy:
-        computedBody?.modalOptions?.onModalDestroy || onModalDestroy,
+      computedOnModalHide: computedOptions?.onModalHide || onModalHide,
+      computedOnModalOpen: computedOptions?.onModalOpen || onModalOpen,
+      computedOnBodyUpdate: computedOptions?.onBodyUpdate || onBodyUpdate,
+      computedOnModalDestroy: computedOptions?.onModalDestroy || onModalDestroy,
       computedOnCloseIconClick:
-        computedBody?.modalOptions?.onCloseIconClick || onCloseIconClick,
+        computedOptions?.onCloseIconClick || onCloseIconClick,
 
       // Other
-      computedCloseIcon: computedBody?.modalOptions?.closeIcon || closeIcon,
+      computedCloseIcon: computedOptions?.closeIcon || closeIcon,
       computedShowCloseIcon:
-        computedBody?.modalOptions?.showCloseIcon !== undefined
-          ? computedBody?.modalOptions?.showCloseIcon
+        computedOptions?.showCloseIcon !== undefined
+          ? computedOptions?.showCloseIcon
           : showCloseIcon,
       computedDestroyBodyOnClose:
-        computedBody?.modalOptions?.destroyBodyOnClose !== undefined
-          ? computedBody?.modalOptions?.destroyBodyOnClose
+        computedOptions?.destroyBodyOnClose !== undefined
+          ? computedOptions?.destroyBodyOnClose
           : destroyBodyOnClose,
     }),
     [
@@ -153,11 +146,11 @@ const ModalComponent = (
       showCloseIcon,
       destroyBodyOnClose,
       onModalOpen,
-      onModalClose,
+      onModalHide,
       onBodyUpdate,
       onModalDestroy,
       onCloseIconClick,
-      computedBody,
+      computedOptions,
     ]
   );
 
@@ -168,59 +161,40 @@ const ModalComponent = (
       return {
         open() {
           setDestroy(false);
-          if (!destroyBodyOnClose) {
-            setHide(false);
-          } else {
-            setOpen(true);
-          }
+          setHide(false);
           computedModalOptions.computedOnModalOpen();
         },
-        close() {
-          if (!destroyBodyOnClose) {
-            setHide(true);
-          } else {
-            setOpen(false);
-          }
-          computedModalOptions.computedOnModalClose();
+        hide() {
+          setHide(true);
+          computedModalOptions.computedOnModalHide();
         },
-        toggle() {
-          setOpen(!open);
-          if (open) {
-            computedModalOptions.computedOnModalClose();
-          } else {
-            setDestroy(false);
-            computedModalOptions.computedOnModalOpen();
-          }
-        },
-        updateBody(child) {
-          setDestroy(false);
-          if (!destroyBodyOnClose) {
-            setHide(false);
-          } else {
-            setOpen(true);
-          }
-          setComputedBody(child);
+        updateBody(body, options) {
+          computedModalOptions.computedOnModalOpen();
           computedModalOptions.computedOnBodyUpdate();
-          computedModalOptions.computedOnModalOpen();
+          setDestroy(false);
+          setHide(false);
+          setComputedBody(body);
+          setComputedOptions(options);
         },
         destroy() {
           setDestroy(true);
-          if (!destroyBodyOnClose) {
-            setHide(true);
-          } else {
-            setOpen(false);
-          }
+          setComputedBody(null);
           computedModalOptions.computedOnModalDestroy();
         },
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onModalClose, onModalOpen, onBodyUpdate, onModalDestroy]
+    [
+      onModalHide,
+      onModalOpen,
+      onBodyUpdate,
+      onModalDestroy,
+      computedModalOptions,
+    ]
   );
 
   return (
-    !destroy &&
-    (open || !computedModalOptions.computedDestroyBodyOnClose ? (
+    !destroy && (
       <div
         className={classNames(
           Style.window,
@@ -252,19 +226,24 @@ const ModalComponent = (
               >
                 <span
                   onClick={() => {
-                    modalRef.current.close();
                     computedModalOptions.computedOnCloseIconClick();
+                    computedModalOptions.computedOnModalHide();
+                    if (computedModalOptions.computedDestroyBodyOnClose) {
+                      modalRef.current.destroy();
+                    } else {
+                      modalRef.current.hide();
+                    }
                   }}
                 >
                   {computedModalOptions.computedCloseIcon}
                 </span>
               </div>
             )}
-            {computedBody?.body}
+            {computedBody}
           </div>
         </div>
       </div>
-    ) : null)
+    )
   );
 };
 
