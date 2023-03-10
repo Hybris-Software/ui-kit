@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, forwardRef } from "react";
 
 // Icons
 import { FiAlertTriangle } from "react-icons/fi";
@@ -54,45 +54,47 @@ import ThemeContext from "../../Contexts/ThemeContext";
  * @param {Object} props.inputRef - Input ref
  */
 
-const InputField = ({
-  autoComplete = "new-password",
-  icon = null,
-  className,
-  baseClassName,
-  successClassName,
-  errorMessageClassName,
-  errorClassName,
-  labelClassName,
-  isValid,
-  errorDetails,
-  type,
-  label,
-  onPaste = true,
-  onCopy = true,
-  placeholder,
-  setValue = () => {},
-  setShowErrors = () => {},
-  style,
-  errorIconVisibility,
-  errorIcon,
-  successIconVisibility,
-  successIcon,
-  showPasswordIconVisibility = true,
-  showPasswordIcon = <HiOutlineEye />,
-  showPasswordIconOff = <HiOutlineEyeOff />,
-  showArrows = false,
-  value,
-  showError = true,
-  maxLength,
-  onBlur = () => {},
-  onInput = () => {},
-  onChange = () => {},
-  readOnly = false,
-  inputId,
-  inputRef,
-}) => {
+const InputFieldComponent = (
+  {
+    autoComplete = "new-password",
+    icon = null,
+    className,
+    baseClassName,
+    successClassName,
+    errorMessageClassName,
+    errorClassName,
+    labelClassName,
+    isValid,
+    errorDetails,
+    type,
+    label,
+    onPaste = true,
+    onCopy = true,
+    placeholder,
+    setValue = () => {},
+    setShowErrors = () => {},
+    style,
+    errorIconVisibility,
+    errorIcon,
+    successIconVisibility,
+    successIcon,
+    showPasswordIconVisibility = true,
+    showPasswordIcon = <HiOutlineEye />,
+    showPasswordIconOff = <HiOutlineEyeOff />,
+    showArrows = false,
+    value,
+    showError = true,
+    maxLength,
+    onBlur = () => {},
+    onInput = () => {},
+    onChange = () => {},
+    readOnly = false,
+    inputId,
+  },
+  ref
+) => {
   const defaultRef = useRef(null);
-  const computedInputRef = inputRef || defaultRef;
+  const computedInputRef = ref || defaultRef;
 
   // Variables
   const [inputType, setInputType] = useState(type);
@@ -286,5 +288,7 @@ const InputField = ({
     </div>
   );
 };
+
+const InputField = forwardRef(InputFieldComponent);
 
 export default InputField;
