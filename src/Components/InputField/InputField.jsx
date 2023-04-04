@@ -114,69 +114,69 @@ const InputFieldComponent = (
 
   const computedBaseClassName =
     baseClassName ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.baseClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.baseClassName) ||
     Style.inputFieldBase;
 
   const computedErrorClassName =
     errorClassName ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.errorClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.errorClassName) ||
     Style.inputFieldError;
 
   const computedSuccessClassName =
     successClassName ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.successClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.successClassName) ||
     Style.inputFieldSuccess;
 
   const computedLabelClassName =
     labelClassName ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.labelClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.labelClassName) ||
     Style.label;
 
   const computedErrorMessageClassName =
     errorMessageClassName ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.errorMessageClassName) ||
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.errorMessageClassName) ||
     Style.errorMessageClassName;
 
   const computedSuccessIcon = successIcon ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.succesIcon) || (
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.succesIcon) || (
       <AiOutlineCheck className={classNames(Style.icon, Style.successIcon)} />
     );
 
   const computedErrorIcon = errorIcon ||
-    (themeContext.theme &&
-      themeContext.theme.inputField &&
-      themeContext.theme.inputField.errorIcon) || (
+    (themeContext?.theme &&
+      themeContext?.theme?.inputField &&
+      themeContext?.theme?.inputField?.errorIcon) || (
       <FiAlertTriangle className={classNames(Style.icon, Style.alertIcon)} />
     );
 
   const computedErrorIconVisibility =
     errorIconVisibility !== undefined
       ? errorIconVisibility
-      : (themeContext.theme &&
-          themeContext.theme.inputField &&
-          themeContext.theme.inputField.errorIconVisibility) !== undefined
-      ? themeContext.theme.inputField.errorIconVisibility
+      : (themeContext?.theme &&
+          themeContext?.theme?.inputField &&
+          themeContext?.theme?.inputField?.errorIconVisibility) !== undefined
+      ? themeContext?.theme?.inputField?.errorIconVisibility
       : false;
 
   const computedSuccessIconVisibility =
     successIconVisibility !== undefined
       ? successIconVisibility
-      : (themeContext.theme &&
-          themeContext.theme.inputField &&
-          themeContext.theme.inputField.successIconVisibility) !== undefined
-      ? themeContext.theme.inputField.successIconVisibility
+      : (themeContext?.theme &&
+          themeContext?.theme?.inputField &&
+          themeContext?.theme?.inputField?.successIconVisibility) !== undefined
+      ? themeContext?.theme?.inputField?.successIconVisibility
       : false;
 
   return (
