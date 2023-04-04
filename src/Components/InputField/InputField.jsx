@@ -116,49 +116,49 @@ const InputFieldComponent = (
     baseClassName ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.baseClassName) ||
-    Style?.inputFieldBase;
+      themeContext?.theme?.inputField.baseClassName) ||
+    Style.inputFieldBase;
 
   const computedErrorClassName =
     errorClassName ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.errorClassName) ||
-    Style?.inputFieldError;
+      themeContext?.theme?.inputField.errorClassName) ||
+    Style.inputFieldError;
 
   const computedSuccessClassName =
     successClassName ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.successClassName) ||
-    Style?.inputFieldSuccess;
+      themeContext?.theme?.inputField.successClassName) ||
+    Style.inputFieldSuccess;
 
   const computedLabelClassName =
     labelClassName ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.labelClassName) ||
-    Style?.label;
+      themeContext?.theme?.inputField.labelClassName) ||
+    Style.label;
 
   const computedErrorMessageClassName =
     errorMessageClassName ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.errorMessageClassName) ||
-    Style?.errorMessageClassName;
+      themeContext?.theme?.inputField.errorMessageClassName) ||
+    Style.errorMessageClassName;
 
   const computedSuccessIcon = successIcon ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.succesIcon) || (
-      <AiOutlineCheck className={classNames(Style?.icon, Style?.successIcon)} />
+      themeContext?.theme?.inputField.succesIcon) || (
+      <AiOutlineCheck className={classNames(Style.icon, Style.successIcon)} />
     );
 
   const computedErrorIcon = errorIcon ||
     (themeContext?.theme &&
       themeContext?.theme?.inputField &&
-      themeContext?.theme?.inputField?.errorIcon) || (
-      <FiAlertTriangle className={classNames(Style?.icon, Style?.alertIcon)} />
+      themeContext?.theme?.inputField.errorIcon) || (
+      <FiAlertTriangle className={classNames(Style.icon, Style.alertIcon)} />
     );
 
   const computedErrorIconVisibility =
@@ -166,8 +166,8 @@ const InputFieldComponent = (
       ? errorIconVisibility
       : (themeContext?.theme &&
           themeContext?.theme?.inputField &&
-          themeContext?.theme?.inputField?.errorIconVisibility) !== undefined
-      ? themeContext?.theme?.inputField?.errorIconVisibility
+          themeContext?.theme?.inputField.errorIconVisibility) !== undefined
+      ? themeContext?.theme?.inputField.errorIconVisibility
       : false;
 
   const computedSuccessIconVisibility =
@@ -175,13 +175,13 @@ const InputFieldComponent = (
       ? successIconVisibility
       : (themeContext?.theme &&
           themeContext?.theme?.inputField &&
-          themeContext?.theme?.inputField?.successIconVisibility) !== undefined
-      ? themeContext?.theme?.inputField?.successIconVisibility
+          themeContext?.theme?.inputField.successIconVisibility) !== undefined
+      ? themeContext?.theme?.inputField.successIconVisibility
       : false;
 
   return (
     <div
-      className={Style?.componentContainer}
+      className={Style.componentContainer}
       onMouseOver={() => {
         if (type === "password" && showPasswordIconVisibility === true) {
           setEyeIconVisibility(true);
@@ -200,7 +200,7 @@ const InputFieldComponent = (
       )}
       <div
         className={classNames(
-          Style?.inputField,
+          Style.inputField,
           isValid === true
             ? computedSuccessClassName
             : isValid === false
@@ -215,8 +215,8 @@ const InputFieldComponent = (
         <input
           ref={computedInputRef}
           className={classNames(
-            Style?.input,
-            showArrows === false && Style?.inputArrows
+            Style.input,
+            showArrows === false && Style.inputArrows
           )}
           autoComplete={autoComplete}
           id={computedInputId}
@@ -253,7 +253,7 @@ const InputFieldComponent = (
         {/* Status icon */}
         {eyeIconVisibility === true ? (
           <span
-            className={classNames(Style?.icon, Style?.eyeIcon)}
+            className={classNames(Style.icon, Style.eyeIcon)}
             onClick={() => {
               if (inputType === "password") {
                 setInputType("text");
@@ -267,7 +267,7 @@ const InputFieldComponent = (
             {eyeIcon}
           </span>
         ) : (
-          <span className={Style?.icon}>
+          <span className={Style.icon}>
             {isValid === true
               ? computedSuccessIconVisibility === true && computedSuccessIcon
               : isValid === false &&
