@@ -181,6 +181,9 @@ const ModalComponent = (
           setComputedBody(null);
           computedModalOptions.computedOnModalDestroy();
         },
+        isOpen(){
+          return !hide;
+        }
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
