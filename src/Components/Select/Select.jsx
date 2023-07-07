@@ -105,19 +105,19 @@ const SelectComponent = (
 
   // Functions
   const checkPosition = (refOpened, state) => {
-    const selectOpened = refOpened.current;
+    const selectOpened = refOpened?.current;
     const selectTop = selectOpened.getBoundingClientRect().top;
     const windowHeight = window.innerHeight;
 
     if (!state) {
       if (windowHeight - selectTop < maxHeightOpened) {
         setPosition("top");
-        selectOpened.style.bottom = `${childRef.current.clientHeight}px`;
+        selectOpened.style.bottom = `${childRef?.current.clientHeight}px`;
         selectOpened.style.top = `auto`;
       }
       if (windowHeight - selectTop >= maxHeightOpened) {
         setPosition("bottom");
-        selectOpened.style.top = `${childRef.current.clientHeight}px`;
+        selectOpened.style.top = `${childRef?.current.clientHeight}px`;
         selectOpened.style.bottom = "auto";
       }
     }
@@ -132,8 +132,8 @@ const SelectComponent = (
     },
     close: () => {
       position === "top"
-        ? (selectOpenedRef.current.style.bottom = "0")
-        : (selectOpenedRef.current.style.top = "0");
+        ? (selectOpenedRef?.current.style.bottom = "0")
+        : (selectOpenedRef?.current.style.top = "0");
       checkPosition(selectOpenedRef, open);
       setOpen(false);
       onSelectClose();
@@ -206,14 +206,14 @@ const SelectComponent = (
         }
         className={classNames(Style.select, computedClassName)}
         onClick={() => {
-          selectRef.current.toggle();
+          selectRef?.current.toggle();
         }}
         onMouseLeave={() => {
-          selectRef.current.close();
+          selectRef?.current.close();
 
           if (scrollToTopOnClose) {
             setTimeout(() => {
-              selectOpenedRef.current.scrollTop = 0;
+              selectOpenedRef?.current.scrollTop = 0;
             }, seconds * 1000);
           }
         }}
@@ -269,7 +269,7 @@ const SelectComponent = (
                   key={i}
                   className={computedClassNameOption}
                   onClick={() => {
-                    selectRef.current.updateValue(option);
+                    selectRef?.current.updateValue(option);
                   }}
                 >
                   {renderOption(option[labelKey], option)}
@@ -280,7 +280,7 @@ const SelectComponent = (
                 key={i}
                 className={computedClassNameOption}
                 onClick={() => {
-                  selectRef.current.updateValue(option);
+                  selectRef?.current.updateValue(option);
                 }}
               >
                 {renderOption(option)}
