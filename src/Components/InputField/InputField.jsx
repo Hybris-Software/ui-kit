@@ -14,6 +14,7 @@ import Style from "./InputField.module.css";
 
 // Contexts
 import ThemeContext from "../../Contexts/ThemeContext";
+import useWindowSize from "../../Utils/useWindowSize";
 
 /**
  * @param {Object} props - props
@@ -42,6 +43,8 @@ import ThemeContext from "../../Contexts/ThemeContext";
  * @param {boolean} props.showPasswordIconVisibility - Show password icon visibility
  * @param {JSX.Element} props.showPasswordIcon - Show password icon
  * @param {JSX.Element} props.showPasswordIconOff - Show password icon off
+ * @param {boolean} props.showPasswordIconAlwaysMobile - Show password icon Always Mobile
+ * @param {number} props.mobileMaximumSize - Mobile Maximum Size
  * @param {boolean} props.showArrows - Show arrows
  * @param {string} props.value - Value
  * @param {boolean} props.showError - Show error
@@ -81,6 +84,8 @@ const InputFieldComponent = (
     showPasswordIconVisibility = true,
     showPasswordIcon = <HiOutlineEye />,
     showPasswordIconOff = <HiOutlineEyeOff />,
+    showPasswordIconAlwaysMobile = false,
+    mobileMaximumSize = 767,
     showArrows = false,
     value,
     showError = true,
@@ -104,6 +109,8 @@ const InputFieldComponent = (
   const computedInputId = inputId || generateRandomCharacters();
 
   const themeContext = useContext(ThemeContext);
+
+  const windowSize = useWindowSize()
 
   const errorMessageString =
     errorDetails == null
@@ -188,8 +195,8 @@ const InputFieldComponent = (
         }
       }}
       onMouseLeave={() => {
-        if (type === "password" && showPasswordIconVisibility === true) {
-          setEyeIconVisibility(false);
+        if (type === "password" && showPasswordIconVisibility === true && showPasswordIconAlwaysMobile === false) {
+            setEyeIconVisibility(false);
         }
       }}
     >
@@ -251,7 +258,7 @@ const InputFieldComponent = (
         />
 
         {/* Status icon */}
-        {eyeIconVisibility === true ? (
+        {eyeIconVisibility === true || (showPasswordIconAlwaysMobile === true && windowSize.width < mobileMaximumSize)  ? (
           <span
             className={classNames(Style.icon, Style.eyeIcon)}
             onClick={() => {
