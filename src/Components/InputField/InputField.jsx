@@ -195,7 +195,7 @@ const InputFieldComponent = (
         }
       }}
       onMouseLeave={() => {
-        if (type === "password" && showPasswordIconVisibility === true && showPasswordIconAlwaysMobile === false) {
+        if (type === "password" && showPasswordIconVisibility === true && (showPasswordIconAlwaysMobile === false || windowSize.width < mobileMaximumSize)) {
             setEyeIconVisibility(false);
         }
       }}
