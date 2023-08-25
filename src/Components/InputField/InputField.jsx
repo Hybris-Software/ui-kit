@@ -110,7 +110,7 @@ const InputFieldComponent = (
 
   const themeContext = useContext(ThemeContext);
 
-  const windowSize = useWindowSize()
+  const windowSize = useWindowSize();
 
   const errorMessageString =
     errorDetails == null
@@ -195,8 +195,13 @@ const InputFieldComponent = (
         }
       }}
       onMouseLeave={() => {
-        if (type === "password" && showPasswordIconVisibility === true && (showPasswordIconAlwaysMobile === false || windowSize.width < mobileMaximumSize)) {
+        if (
+          showPasswordIconAlwaysMobile === false ||
+          windowSize.width > mobileMaximumSize
+        ) {
+          if (type === "password" && showPasswordIconVisibility === true) {
             setEyeIconVisibility(false);
+          }
         }
       }}
     >
@@ -258,7 +263,9 @@ const InputFieldComponent = (
         />
 
         {/* Status icon */}
-        {eyeIconVisibility === true || (showPasswordIconAlwaysMobile === true && windowSize.width < mobileMaximumSize)  ? (
+        {eyeIconVisibility === true ||
+        (showPasswordIconAlwaysMobile === true &&
+          windowSize.width < mobileMaximumSize) ? (
           <span
             className={classNames(Style.icon, Style.eyeIcon)}
             onClick={() => {
