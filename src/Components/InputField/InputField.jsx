@@ -190,19 +190,10 @@ const InputFieldComponent = (
     <div
       className={Style.componentContainer}
       onMouseOver={() => {
-        if (type === "password" && showPasswordIconVisibility === true) {
-          setEyeIconVisibility(true);
-        }
+        setEyeIconVisibility(true);
       }}
       onMouseLeave={() => {
-        if (
-          showPasswordIconAlwaysMobile === false ||
-          windowSize.width > mobileMaximumSize
-        ) {
-          if (type === "password" && showPasswordIconVisibility === true) {
-            setEyeIconVisibility(false);
-          }
-        }
+        setEyeIconVisibility(false);
       }}
     >
       {label && (
@@ -263,9 +254,12 @@ const InputFieldComponent = (
         />
 
         {/* Status icon */}
-        {eyeIconVisibility === true ||
-        (showPasswordIconAlwaysMobile === true &&
-          windowSize.width < mobileMaximumSize) ? (
+        {type === "password" &&
+        showPasswordIconVisibility === true &&
+        ((eyeIconVisibility === true &&
+          windowSize.width >= mobileMaximumSize) ||
+          (showPasswordIconAlwaysMobile === true &&
+            windowSize.width < mobileMaximumSize)) ? (
           <span
             className={classNames(Style.icon, Style.eyeIcon)}
             onClick={() => {
